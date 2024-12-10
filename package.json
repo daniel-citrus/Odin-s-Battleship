@@ -1,0 +1,33 @@
+{
+    "name": "super-template",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "code": "webpack --watch --mode development",
+        "production": "webpack --mode production"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daniel-citrus/super-template.git"
+    },
+    "author": "Daniel",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daniel-citrus/super-template/issues"
+    },
+    "homepage": "https://github.com/daniel-citrus/super-template#readme",
+    "devDependencies": {
+        "html-webpack-plugin": "^5.6.3",
+        "mini-css-extract-plugin": "^2.9.1",
+        "webpack": "^5.95.0",
+        "webpack-cli": "^5.1.4"
+    },
+    "dependencies": {
+        "css-loader": "^7.1.2",
+        "postcss-loader": "^8.1.1",
+        "sass": "^1.80.4",
+        "sass-loader": "^16.0.2",
+        "style-loader": "^4.0.0"
+    }
+}
