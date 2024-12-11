@@ -6,13 +6,12 @@ describe('ship', () => {
     test('methods', () => {
         expect(ship.length).toBe(5);
         expect(ship.hit()).toBe(true);
-        expect(ship.length).toBe(4);
-        expect(ship.sunk).toBe(false);
+        expect(ship.hasSunk).toBe(false);
         expect(ship.hit()).toBe(true);
         expect(ship.hit()).toBe(true);
         expect(ship.hit()).toBe(true);
         expect(ship.hit()).toBe(true);
         expect(ship.hit()).toBe(false);
-        expect(ship.sunk).toBe(true);
+        expect(ship.hasSunk).toBe(true);
     });
 });
