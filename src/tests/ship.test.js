@@ -1,4 +1,4 @@
-const { Ship } = require('../scripts/ship');
+const Ship = require('../scripts/ship');
 
 describe('ship', () => {
     const ship = new Ship(5);
@@ -17,5 +17,13 @@ describe('ship', () => {
     });
 });
 
-const { Gameboard } = require('../scripts/gameboard');
+const Gameboard = require('../scripts/gameboard');
 
+describe('gameboard', () => {
+    const board = new Gameboard();
+
+    test('combat', () => {
+        expect(board.board.length).toBe(100);
+        expect(board.board[0].length).toBe(100);
+    });
+});
