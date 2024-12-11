@@ -1,4 +1,4 @@
-export class Ship {
+class Ship {
     constructor(length) {
         this.length = length;
         this.hits = 0;
@@ -18,3 +18,5 @@ export class Ship {
         return true;
     }
 }
+
+module.exports = Ship;
