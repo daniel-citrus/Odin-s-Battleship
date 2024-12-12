@@ -1,6 +1,7 @@
 class Ship {
-    constructor(length) {
+    constructor(name, length) {
         this.length = length;
+        this.name = name;
         this.hits = 0;
     }
 
