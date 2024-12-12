@@ -19,19 +19,18 @@ describe('gameboard', () => {
     });
 
     describe('add and remove ships', () => {
-        test('add ship in valid spots', () => {
-            // add ships vertically
-            // add ships horizontally
-        });
-        test('add ships in invalid spots', () => {
-            // add ships vertically
-            // add ships horizontally
-        });
-
         test('clear board', () => {
-            expect(board.isEmpty).toBe(false);
+            expect(board.hasShips).toBe(true);
             board.clearShips();
-            expect(board.isEmpty).toBe(true);
+            expect(board.hasShips).toBe(false);
+        });
+        describe('in valid spots', () => {
+            test('vertically', () => {});
+            test('horizontally', () => {});
+        });
+        describe('in invalid spots', () => {
+            test('vertically', () => {});
+            test('horizontally', () => {});
         });
     });
 

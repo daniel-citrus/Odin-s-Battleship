@@ -6,8 +6,16 @@ class Gameboard {
         this.ships = this.#createShips();
     }
 
-    getBoard() {
-        return this.board;
+    get hasShips() {
+        for (let row in this.board) {
+            for (let col in this.board[row]) {
+                if (this.board[row][col].ship) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -17,18 +25,31 @@ class Gameboard {
      * @returns true if cell has not been attacked yet
      */
     attack(x, y) {
-        const cell = this.board[x][y];
+        const target = this.board[x][y];
 
-        if (cell.hit) {
+        if (target.hit) {
             return false;
         }
 
-        if (cell.ship) {
-            const ship = this.ships.get(cell.ship);
+        if (target.ship) {
+            const ship = this.ships.get(target.ship);
             ship.hit();
         }
 
+        this.board[x][y].hit = true;
+
         return true;
+    }
+
+    clearShips() {
+        const row = this.board.length;
+        const col = this.board[0].length;
+
+        for (let r = 0; r < row; r++) {
+            for (let c = 0; c < col; c++) {
+                return this.board[r][c];
+            }
+        }
     }
 
     #createBoard(size = 10) {
@@ -88,6 +109,10 @@ class Gameboard {
         }
 
         return ships;
+    }
+
+    getBoard() {
+        return this.board;
     }
 }
 
