@@ -1,10 +1,22 @@
-export class Gameboard {
+class Gameboard {
     constructor() {
-        this.board = this.#createBoard;
+        this.board = this.#createBoard();
     }
 
-    get board() {
+    getBoard() {
         return this.board;
+    }
+
+    attack(x, y) {
+        const cell = this.board[x][y];
+
+        if (cell.hit) {
+            return false;
+        }
+
+        // hit the ship
+
+        return true;
     }
 
     #createBoard(size = 10) {
@@ -13,7 +25,10 @@ export class Gameboard {
         for (let x = 0; x < size; x++) {
             const row = [];
             for (let y = 0; y < size; y++) {
-                row.push([]);
+                row.push({
+                    ship: null,
+                    hit: false,
+                });
             }
             board.push(row);
         }

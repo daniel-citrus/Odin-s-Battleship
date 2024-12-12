@@ -3,8 +3,12 @@ const Gameboard = require('../scripts/gameboard');
 describe('gameboard', () => {
     const board = new Gameboard();
 
-    test('combat', () => {
-        expect(board.board.length).toBe(100);
-        expect(board.board[0].length).toBe(100);
+    test('combat arena size', () => {
+        expect(board.getBoard().length).toBe(10);
+        expect(board.getBoard()[0].length).toBe(10);
+    });
+
+    test('attach coordinates', () => {
+        expect(board.attack(2, 6)).toBe(true);
     });
 });
