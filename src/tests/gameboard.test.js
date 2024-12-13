@@ -25,12 +25,27 @@ describe('gameboard', () => {
             expect(board.hasShips).toBe(false);
         });
         describe('in valid spots', () => {
-            test('vertically', () => {});
-            test('horizontally', () => {});
+            // ship type 0 has length of 5
+            test('vertically', () => {
+                expect(board.addShip(3, 5, 0, 'vertical')).toBe(true);
+                expect(board.addShip(5, 3, 0, 'vertical')).toBe(false);
+            });
+            test('horizontally', () => {
+                expect(board.addShip(3, 5, 0, 'horizontal')).toBe(false);
+                expect(board.addShip(5, 3, 0, 'horizontal')).toBe(true);
+            });
         });
         describe('in invalid spots', () => {
-            test('vertically', () => {});
-            test('horizontally', () => {});
+            test('vertically', () => {
+                expect(board.addShip(2, 5, 0, 'vertical')).toBe(true);
+                expect(board.addShip(3, 5, 0, 'vertical')).toBe(false);
+                expect(board.addShip(5, 6, 0, 'vertical')).toBe(false);
+            });
+            test('horizontally', () => {
+                expect(board.addShip(5, 2, 0, 'horizontal')).toBe(true);
+                expect(board.addShip(5, 4, 0, 'horizontal')).toBe(false);
+                expect(board.addShip(3, 6, 0, 'horizontal')).toBe(false);
+            });
         });
     });
 

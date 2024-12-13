@@ -3,8 +3,47 @@ const Ship = require('./ship');
 class Gameboard {
     constructor() {
         this.board = this.#createBoard();
-        this.ships = this.#createShips();
+        this.ships = new Map();
     }
+
+    // 5 types of ships, each type denoted by map key
+    #shipTypes = new Map([
+        [
+            0,
+            {
+                length: 5,
+                name: 'Carrier',
+            },
+        ],
+        [
+            1,
+            {
+                length: 4,
+                name: 'Battleship',
+            },
+        ],
+        [
+            2,
+            {
+                length: 3,
+                name: 'Cruiser',
+            },
+        ],
+        [
+            3,
+            {
+                length: 4,
+                name: 'Submarine',
+            },
+        ],
+        [
+            4,
+            {
+                length: 2,
+                name: 'Destroyer',
+            },
+        ],
+    ]);
 
     get hasShips() {
         for (let row in this.board) {
@@ -16,6 +55,35 @@ class Gameboard {
         }
 
         return false;
+    }
+
+    /**
+     *
+     * @param {*} x
+     * @param {*} y
+     * @param {*} type
+     * @param {*} direction
+     */
+    addShip(x, y, type, direction) {
+        const ship = this.#shipTypes.get(type);
+
+        if (!ship) {
+            return;
+        }
+
+        // get ship length
+        const length = ship.length;
+        const name = ship.name;
+        // depending on the direction, check if ship will go over the boundary
+        if (direction === 'vertical') {
+            
+        } else if (direction === 'horizontal') { 
+            
+        }
+
+        // if over boundary return false
+        // else insert the ship
+        return true;
     }
 
     /**
@@ -67,48 +135,6 @@ class Gameboard {
         }
 
         return board;
-    }
-
-    #createShips() {
-        const availableShips = [
-            {
-                id: 0,
-                length: 5,
-                name: 'Carrier',
-            },
-            {
-                id: 1,
-                length: 4,
-                name: 'Battleship',
-            },
-            {
-                id: 2,
-                length: 3,
-                name: 'Cruiser',
-            },
-            {
-                id: 3,
-                length: 4,
-                name: 'Submarine',
-            },
-            {
-                id: 4,
-                length: 2,
-                name: 'Destroyer',
-            },
-        ];
-
-        const ships = new Map();
-
-        for (let ship of availableShips) {
-            const name = ship.name;
-            const length = ship.length;
-            const id = ship.id;
-
-            ships.set(id, new Ship(name, length));
-        }
-
-        return ships;
     }
 
     getBoard() {
