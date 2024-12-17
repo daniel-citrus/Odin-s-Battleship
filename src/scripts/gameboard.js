@@ -58,31 +58,53 @@ class Gameboard {
     }
 
     /**
-     *
-     * @param {*} x
-     * @param {*} y
-     * @param {*} type
-     * @param {*} direction
+     * Add ship to board if it fits on the given coordinates
+     * @param {*} x board x coordinate
+     * @param {*} y board y coordinate
+     * @param {*} type ship type by number
+     * @param {*} direction vertical or horizontal placement
      */
     addShip(x, y, type, direction) {
         const ship = this.#shipTypes.get(type);
 
         if (!ship) {
-            return;
+            return false;
         }
 
         // get ship length
         const length = ship.length;
         const name = ship.name;
-        // depending on the direction, check if ship will go over the boundary
-        if (direction === 'vertical') {
-            
-        } else if (direction === 'horizontal') { 
-            
+
+        if (!this.#shipFits(x, y, length, direction)) {
+            return false;
         }
 
-        // if over boundary return false
         // else insert the ship
+        // add to this.ships
+        const id = this.ships.length;
+        this.ships.set(id, new Ship(name, length));
+
+        return true;
+    }
+
+    #shipFits(x, y, length, direction) {
+        const maxCoord = this.board.length - 1;
+        // depending on the direction, check if ship will go over the boundary
+        // if over boundary return false
+        if (direction === 'vertical') {
+            const endX = x + length - 1;
+
+            if (endX > maxCoord) {
+                return false;
+            }
+        } else if (direction === 'horizontal') {
+            const endY = y + length - 1;
+
+            if (endY > maxCoord) {
+                return false;
+            }
+        }
+
         return true;
     }
 
