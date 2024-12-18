@@ -45,7 +45,7 @@ class Gameboard {
         ],
     ]);
 
-    hasShips() {
+    get hasShips() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (this.board[row][col].ship !== false) {
@@ -55,6 +55,21 @@ class Gameboard {
         }
 
         return false;
+    }
+
+    get allShipsDestroyed() {
+        for (let row in this.board) {
+            for (let col in this.board[row]) {
+                if (
+                    this.board[row][col].ship !== false &&
+                    !this.board[row][col].hit
+                ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

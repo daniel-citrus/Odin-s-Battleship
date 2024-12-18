@@ -12,18 +12,19 @@ describe('gameboard', () => {
         });
         test('all ships destroyed', () => {
             // add a ship
-            expect(board.allShipsDestroyed()).toBe(false);
+            board.addShip(2, 3, 0, 'vertical');
+            expect(board.allShipsDestroyed).toBe(false);
             board.hitAllShips();
-            expect(board.allShipsDestroyed()).toBe(true);
+            expect(board.allShipsDestroyed).toBe(true);
         });
     });
 
     describe('add and remove ships', () => {
         test('clear board', () => {
             board.addShip(2, 3, 0, 'vertical');
-            expect(board.hasShips()).toBe(true);
+            expect(board.hasShips).toBe(true);
             board.clearShips();
-            expect(board.hasShips()).toBe(false);
+            expect(board.hasShips).toBe(false);
         });
         describe('in valid spots', () => {
             // ship type 0 has length of 5
