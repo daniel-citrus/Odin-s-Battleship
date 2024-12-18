@@ -45,10 +45,10 @@ class Gameboard {
         ],
     ]);
 
-    get hasShips() {
+    hasShips() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
-                if (this.board[row][col].ship) {
+                if (this.board[row][col].ship !== false) {
                     return true;
                 }
             }
@@ -71,7 +71,6 @@ class Gameboard {
             return false;
         }
 
-        // get ship length
         const length = ship.length;
         const name = ship.name;
 
@@ -80,9 +79,16 @@ class Gameboard {
         }
 
         // else insert the ship
-        // add to this.ships
-        const id = this.ships.length;
+        const id = this.ships.size;
         this.ships.set(id, new Ship(name, length));
+
+        for (let i = 0; i < length; i++) {
+            if (direction === 'vertical') {
+                this.board[x + i][y].ship = id;
+            } else if (direction === 'horizontal') {
+                this.board[x][y + i].ship = id;
+            }
+        }
 
         return true;
     }
@@ -137,7 +143,8 @@ class Gameboard {
 
         for (let r = 0; r < row; r++) {
             for (let c = 0; c < col; c++) {
-                return this.board[r][c];
+                this.board[r][c].ship = false;
+                this.board[r][c].hit = false;
             }
         }
     }

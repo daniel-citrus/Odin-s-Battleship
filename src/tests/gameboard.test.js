@@ -20,9 +20,10 @@ describe('gameboard', () => {
 
     describe('add and remove ships', () => {
         test('clear board', () => {
-            expect(board.hasShips).toBe(true);
+            board.addShip(2, 3, 0, 'vertical');
+            expect(board.hasShips()).toBe(true);
             board.clearShips();
-            expect(board.hasShips).toBe(false);
+            expect(board.hasShips()).toBe(false);
         });
         describe('in valid spots', () => {
             // ship type 0 has length of 5
