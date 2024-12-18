@@ -184,6 +184,17 @@ class Gameboard {
     getBoard() {
         return this.board;
     }
+
+    // Sink all ships on the board
+    hitAllShips() {
+        for (let row in this.board) {
+            for (let col in this.board[row]) {
+                if (this.board[row][col].ship !== false) {
+                    this.board[row][col].hit = true;
+                }
+            }
+        }
+    }
 }
 
 module.exports = Gameboard;
