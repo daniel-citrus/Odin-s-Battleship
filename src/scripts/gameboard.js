@@ -212,4 +212,5 @@ class Gameboard {
     }
 }
 
-module.exports = Gameboard;
+export default Gameboard;
+/* module.exports = Gameboard; */

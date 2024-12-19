@@ -1,5 +1,5 @@
-const Gameboard = require('./gameboard');
-/* import Gameboard from "./gameboard"; */
+/* const Gameboard = require('./gameboard'); */
+import Gameboard from "./gameboard";
 
 class Player {
     constructor() {
@@ -15,4 +15,5 @@ class Computer extends Player {
     }
 }
 
-module.exports = { Player, Computer };
+export { Player, Computer };
+/* module.exports = { Player, Computer }; */

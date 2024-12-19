@@ -1,4 +1,5 @@
-import '../style/style.css';
+import '../style/style.scss';
+import './display';
 
 // game loop
 // set current player: 1
@@ -8,7 +9,5 @@ import '../style/style.css';
 // else switch current player
 // if mode is 'computer,' auto attack for computer
 
-
-
-function startGame() { }
-function playerWins() { }
+function startGame() {}
+function playerWins() {}

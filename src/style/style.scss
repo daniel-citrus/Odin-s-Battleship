@@ -1,5 +1,17 @@
-$background-color: blue;
+$background-color: rgb(26, 26, 26);
 
 body {
     background: $background-color;
+}
+
+div {
+    border: 1px solid white;
+}
+
+.board {
+    height: 200px;
+    width: 200px;
+
+    display: grid;
+    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 }
