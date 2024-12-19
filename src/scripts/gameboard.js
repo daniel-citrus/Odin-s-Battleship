@@ -142,7 +142,7 @@ class Gameboard {
             return false;
         }
 
-        if (target.ship) {
+        if (target.ship !== false) {
             const ship = this.ships.get(target.ship);
             ship.hit();
         }
