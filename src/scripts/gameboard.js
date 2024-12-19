@@ -57,6 +57,7 @@ class Gameboard {
         return false;
     }
 
+    // No ships on board or all ships are destroyed
     get allShipsDestroyed() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
@@ -68,7 +69,6 @@ class Gameboard {
                 }
             }
         }
-
         return true;
     }
 
