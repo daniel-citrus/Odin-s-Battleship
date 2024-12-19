@@ -93,7 +93,7 @@ class Gameboard {
             return false;
         }
 
-        // else insert the ship
+        // insert the ship
         const id = this.ships.size;
         this.ships.set(id, new Ship(name, length));
 
