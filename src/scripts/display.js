@@ -7,10 +7,9 @@ body.appendChild(board);
 
 buildBoard();
 const player = new Player();
-player.board.addShip(2, 3, 0, 'vertical');
-
+player.board.randomizeBoard();
 populateBoard(player.board.board);
-
+resetBoard();
 function buildBoard(dim = 10) {
     for (let row = 0; row < dim; row++) {
         for (let col = 0; col < dim; col++) {
@@ -22,9 +21,11 @@ function buildBoard(dim = 10) {
 function buildCell(x, y) {
     const cell = document.createElement('div');
 
+    cell.classList.add('cell');
     cell.dataset.x = x;
     cell.dataset.y = y;
     cell.dataset.hit = false;
+    cell.dataset.ship = false;
 
     return cell;
 }
@@ -43,5 +44,14 @@ function populateBoard(board) {
 
             cell.dataset.ship = ship.name;
         }
+    }
+}
+
+function resetBoard() {
+    const cells = document.querySelectorAll(`.board .cell`);
+
+    for (let cell of cells) {
+        cell.dataset.hit = false;
+        cell.dataset.ship = false;
     }
 }

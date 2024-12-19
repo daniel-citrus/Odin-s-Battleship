@@ -1,5 +1,5 @@
-const Ship = require('./ship');
-/* import Ship from './ship'; */
+/* const Ship = require('./ship'); */
+import Ship from './ship';
 
 class Gameboard {
     constructor() {
@@ -204,7 +204,33 @@ class Gameboard {
             }
         }
     }
+
+    randomizeBoard() {
+        for (const [id, ship] of this.#shipTypes) {
+            let x = this.#getRandomInt(this.board.length);
+            let y = this.#getRandomInt(this.board.length);
+            let orientation = this.#randomOrientation();
+
+            while (!this.addShip(x, y, id, orientation)) {
+                x = this.#getRandomInt(this.board.length);
+                y = this.#getRandomInt(this.board.length);
+                orientation = this.#randomOrientation();
+            }
+        }
+    }
+
+    #getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    #randomOrientation() {
+        if (this.#getRandomInt(2)) {
+            return 'horizontal';
+        }
+
+        return 'vertical';
+    }
 }
 
-/* export default Gameboard; */
-module.exports = Gameboard;
+export default Gameboard;
+/* module.exports = Gameboard; */

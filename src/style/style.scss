@@ -15,6 +15,18 @@ div {
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 
+    div[data-ship='Battleship'] {
+        background: orange;
+    }
+    div[data-ship='Submarine'] {
+        background: yellow;
+    }
+    div[data-ship='Destroyer'] {
+        background: green;
+    }
+    div[data-ship='Cruiser'] {
+        background: red;
+    }
     div[data-ship='Carrier'] {
         background: blue;
     }
