@@ -14,4 +14,8 @@ div {
 
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+
+    div[data-ship='Carrier'] {
+        background: blue;
+    }
 }

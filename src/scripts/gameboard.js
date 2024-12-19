@@ -123,6 +123,18 @@ class Gameboard {
             }
         }
 
+        for (let i = 0; i < length; i++) {
+            if (direction === 'vertical') {
+                if (this.board[x + i][y].ship) {
+                    return false;
+                }
+            } else if (direction === 'horizontal') {
+                if (this.board[x][y + i].ship) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
