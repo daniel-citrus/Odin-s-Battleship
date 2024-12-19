@@ -17,6 +17,10 @@ class Ship {
         this.hits++;
         return true;
     }
+
+    sinkShip() {
+        this.hits = this.length;
+    }
 }
 
 module.exports = Ship;

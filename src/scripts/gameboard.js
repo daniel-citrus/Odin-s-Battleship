@@ -46,6 +46,10 @@ class Gameboard {
     ]);
 
     get hasShips() {
+        if (this.ships.size) {
+            return true;
+        }
+
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (this.board[row][col].ship !== false) {
@@ -59,6 +63,11 @@ class Gameboard {
 
     // No ships on board or all ships are destroyed
     get allShipsDestroyed() {
+        for (const [id, ship] of this.ships.entries()) {
+            if (!ship.hasSunk) {
+                return false;
+            }
+        }
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (
@@ -153,6 +162,8 @@ class Gameboard {
     }
 
     clearShips() {
+        this.ships = new Map();
+
         const row = this.board.length;
         const col = this.board[0].length;
 
@@ -187,6 +198,10 @@ class Gameboard {
 
     // Sink all ships on the board
     hitAllShips() {
+        for (const [id, ship] of this.ships.entries()) {
+            ship.sinkShip();
+        }
+
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (this.board[row][col].ship !== false) {
