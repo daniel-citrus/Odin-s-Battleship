@@ -17,11 +17,7 @@ class Ship {
         this.hits++;
         return true;
     }
-
-    sinkShip() {
-        this.hits = this.length;
-    }
 }
 
-export default Ship;
-/* module.exports = Ship; */
+/* export default Ship; */
+module.exports = Ship;

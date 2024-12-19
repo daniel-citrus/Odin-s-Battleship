@@ -1,9 +1,9 @@
 const Ship = require('./ship');
+/* import Ship from './ship'; */
 
 class Gameboard {
     constructor() {
         this.board = this.#createBoard();
-        this.ships = new Map();
     }
 
     // 5 types of ships, each type denoted by map key
@@ -46,10 +46,6 @@ class Gameboard {
     ]);
 
     get hasShips() {
-        if (this.ships.size) {
-            return true;
-        }
-
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (this.board[row][col].ship !== false) {
@@ -63,11 +59,6 @@ class Gameboard {
 
     // No ships on board or all ships are destroyed
     get allShipsDestroyed() {
-        for (const [id, ship] of this.ships.entries()) {
-            if (!ship.hasSunk) {
-                return false;
-            }
-        }
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (
@@ -89,28 +80,26 @@ class Gameboard {
      * @param {*} direction vertical or horizontal placement
      */
     addShip(x, y, type, direction) {
-        const ship = this.#shipTypes.get(type);
+        const shipType = this.#shipTypes.get(type);
 
-        if (!ship) {
+        if (!shipType) {
             return false;
         }
 
-        const length = ship.length;
-        const name = ship.name;
+        const length = shipType.length;
+        const name = shipType.name;
 
         if (!this.#shipFits(x, y, length, direction)) {
             return false;
         }
 
-        // insert the ship
-        const id = this.ships.size;
-        this.ships.set(id, new Ship(name, length));
+        const ship = new Ship(name, length);
 
         for (let i = 0; i < length; i++) {
             if (direction === 'vertical') {
-                this.board[x + i][y].ship = id;
+                this.board[x + i][y].ship = ship;
             } else if (direction === 'horizontal') {
-                this.board[x][y + i].ship = id;
+                this.board[x][y + i].ship = ship;
             }
         }
 
@@ -120,7 +109,6 @@ class Gameboard {
     #shipFits(x, y, length, direction) {
         const maxCoord = this.board.length - 1;
         // depending on the direction, check if ship will go over the boundary
-        // if over boundary return false
         if (direction === 'vertical') {
             const endX = x + length - 1;
 
@@ -162,8 +150,6 @@ class Gameboard {
     }
 
     clearShips() {
-        this.ships = new Map();
-
         const row = this.board.length;
         const col = this.board[0].length;
 
@@ -198,10 +184,6 @@ class Gameboard {
 
     // Sink all ships on the board
     hitAllShips() {
-        for (const [id, ship] of this.ships.entries()) {
-            ship.sinkShip();
-        }
-
         for (let row in this.board) {
             for (let col in this.board[row]) {
                 if (this.board[row][col].ship !== false) {
@@ -212,5 +194,5 @@ class Gameboard {
     }
 }
 
-export default Gameboard;
-/* module.exports = Gameboard; */
+/* export default Gameboard; */
+module.exports = Gameboard;
