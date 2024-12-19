@@ -10,6 +10,10 @@ describe('gameboard', () => {
         test('10 columns', () => {
             expect(board.getBoard()[0].length).toBe(10);
         });
+        test('board matches', () => {
+            expect(board.getBoard()).toEqual(board.getBoard());
+        });
+
         test('all ships destroyed', () => {
             // add a ship
             board.addShip(2, 3, 0, 'vertical');

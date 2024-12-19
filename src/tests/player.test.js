@@ -8,7 +8,7 @@ describe('player', () => {
 
     beforeEach(() => {
         testBoard = new Gameboard();
-        expect(testBoard.addShip(3, 2, 2, 'verticalgit')).toBe(true);
+        expect(testBoard.addShip(3, 2, 2, 'vertical')).toBe(true);
     });
 
     describe('methods', () => {
