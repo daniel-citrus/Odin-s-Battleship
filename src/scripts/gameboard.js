@@ -74,10 +74,10 @@ class Gameboard {
 
     /**
      * Add ship to board if it fits on the given coordinates
-     * @param {*} x board x coordinate
-     * @param {*} y board y coordinate
-     * @param {*} type ship type by number
-     * @param {*} direction vertical or horizontal placement
+     * @param {number} x board x coordinate
+     * @param {number} y board y coordinate
+     * @param {number} type ship type by number
+     * @param {boolean} direction vertical or horizontal placement
      */
     addShip(x, y, type, direction) {
         const shipType = this.#shipTypes.get(type);
@@ -140,9 +140,9 @@ class Gameboard {
 
     /**
      * Attack coordinates
-     * @param {*} x
-     * @param {*} y
-     * @returns true if cell has not been attacked yet
+     * @param {number} x
+     * @param {number} y
+     * @returns {boolean} successful attack
      */
     attack(x, y) {
         const target = this.board[x][y];

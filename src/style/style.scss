@@ -15,19 +15,34 @@ div {
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 
-    div[data-ship='Battleship'] {
+    [data-ship='Battleship'] {
         background: orange;
     }
-    div[data-ship='Submarine'] {
+    [data-ship='Submarine'] {
         background: yellow;
     }
-    div[data-ship='Destroyer'] {
+    [data-ship='Destroyer'] {
         background: green;
     }
-    div[data-ship='Cruiser'] {
+    [data-ship='Cruiser'] {
         background: red;
     }
-    div[data-ship='Carrier'] {
+    [data-ship='Carrier'] {
         background: blue;
+    }
+
+    /* hit */
+    [data-hit='true'] {
+        &[data-ship='Battleship'],
+        &[data-ship='Submarine'],
+        &[data-ship='Destroyer'],
+        &[data-ship='Cruiser'],
+        &[data-ship='Carrier'] {
+            background: red;
+        }
+
+        & {
+            background: rgb(119, 0, 0)
+        }
     }
 }

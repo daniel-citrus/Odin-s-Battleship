@@ -9,7 +9,7 @@ buildBoard();
 const player = new Player();
 player.board.randomizeBoard();
 populateBoard(player.board.board);
-resetBoard();
+
 function buildBoard(dim = 10) {
     for (let row = 0; row < dim; row++) {
         for (let col = 0; col < dim; col++) {
@@ -27,7 +27,15 @@ function buildCell(x, y) {
     cell.dataset.hit = false;
     cell.dataset.ship = false;
 
+    cell.addEventListener('click', () => {
+        attackCell(cell);
+    });
+
     return cell;
+}
+
+function attackCell(cell) {
+    cell.dataset.hit = true;
 }
 
 function populateBoard(board) {
