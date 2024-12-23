@@ -7,7 +7,11 @@ const player = new Player();
 const opponent = new Player();
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
-display.populateBoard(player.board.board, opponent.board.board);
+display.populateBoards(player.board.board);
+
+export function attack(x, y) {
+    return player.board.attack(x, y);
+}
 
 // game loop
 // set current player: 1

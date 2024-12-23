@@ -2,7 +2,8 @@ const body = document.querySelector('body');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, attackCell, populateBoard, resetBoard };
+export { buildBoard, hitCell, missCell, populateBoards, resetBoard };
+import * as brain from './index';
 
 function buildBoard(dim = 10) {
     for (let row = 0; row < dim; row++) {
@@ -32,21 +33,45 @@ function buildCell(x, y, hit = false) {
 }
 
 function attackCell(cell) {
-    cell.dataset.hit = true;
+    const x = cell.dataset.x;
+    const y = cell.dataset.y;
+
+    const result = brain.attack(x, y);
+    if (result) {
+        hitCell(cell);
+    } else if (result === false) {
+        missCell(cell);
+    }
 }
 
 /**
- * Display current players board
- * @param {array} player
+ * Mark cell as a hit
+ * @param {element} cell
  */
-function populateBoard(player, opponent) {
-    for (let row in player) {
-        for (let col in player) {
-            if (!player[row][col].ship) {
+function hitCell(cell) {
+    cell.classList.add('hit');
+}
+
+/**
+ * Mark cell as a miss
+ * @param {element} cell
+ */
+function missCell(cell) {
+    cell.classList.add('miss');
+}
+
+/**
+ * Display board using board array
+ * @param {array} boardArray
+ */
+function populateBoards(boardArray, opponentArray) {
+    for (let row in boardArray) {
+        for (let col in boardArray) {
+            if (!boardArray[row][col].ship) {
                 continue;
             }
 
-            const ship = player[row][col].ship;
+            const ship = boardArray[row][col].ship;
             let cell = playerBoard.querySelector(
                 `div[data-x='${row}'][data-y='${col}']`
             );
@@ -59,6 +84,18 @@ function populateBoard(player, opponent) {
         }
     }
 }
+
+/**
+ * Display current player's board
+ * @param {array} array
+ */
+function populatePlayerBoard(array) {}
+
+/**
+ * Display hitboard using opponents board
+ * @param {array} array - other player's array
+ */
+function populateHitBoard(array) {}
 
 /**
  * Diplay current player's hitboard

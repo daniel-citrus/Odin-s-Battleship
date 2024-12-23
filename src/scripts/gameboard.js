@@ -147,13 +147,14 @@ class Gameboard {
     attack(x, y) {
         const target = this.board[x][y];
 
-        if (target.hit) {
-            return false;
+        if (target.hit !== null) {
+            return null;
         }
 
-        if (target.ship !== false) {
-            const ship = this.ships.get(target.ship);
-            ship.hit();
+        if (target.ship) {
+            target.ship.hit();
+        } else {
+            return false;
         }
 
         this.board[x][y].hit = true;
@@ -168,7 +169,7 @@ class Gameboard {
         for (let r = 0; r < row; r++) {
             for (let c = 0; c < col; c++) {
                 this.board[r][c].ship = false;
-                this.board[r][c].hit = false;
+                this.board[r][c].hit = null;
             }
         }
     }
@@ -181,7 +182,7 @@ class Gameboard {
             for (let y = 0; y < size; y++) {
                 row.push({
                     ship: false,
-                    hit: false,
+                    hit: null,
                 });
             }
             board.push(row);
