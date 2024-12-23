@@ -1,5 +1,13 @@
 import '../style/style.scss';
-import './display';
+import * as display from './display';
+import { Player } from './player';
+
+display.buildBoard();
+const player = new Player();
+const opponent = new Player();
+player.board.randomizeBoard();
+opponent.board.randomizeBoard();
+display.populateBoard(player.board.board, opponent.board.board);
 
 // game loop
 // set current player: 1

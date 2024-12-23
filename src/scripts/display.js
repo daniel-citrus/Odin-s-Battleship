@@ -1,24 +1,19 @@
-import { Player } from './player';
-
 const body = document.querySelector('body');
-const board = document.createElement('div');
-board.classList.add('board');
-body.appendChild(board);
+const playerBoard = document.getElementById('current');
+const hitBoard = document.getElementById('opponent');
 
-buildBoard();
-const player = new Player();
-player.board.randomizeBoard();
-populateBoard(player.board.board);
+export { buildBoard, attackCell, populateBoard, resetBoard };
 
 function buildBoard(dim = 10) {
     for (let row = 0; row < dim; row++) {
         for (let col = 0; col < dim; col++) {
-            board.appendChild(buildCell(row, col));
+            playerBoard.appendChild(buildCell(row, col, false));
+            hitBoard.appendChild(buildCell(row, col, true));
         }
     }
 }
 
-function buildCell(x, y) {
+function buildCell(x, y, hit = false) {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
@@ -27,9 +22,11 @@ function buildCell(x, y) {
     cell.dataset.hit = false;
     cell.dataset.ship = false;
 
-    cell.addEventListener('click', () => {
-        attackCell(cell);
-    });
+    if (hit) {
+        cell.addEventListener('click', () => {
+            attackCell(cell);
+        });
+    }
 
     return cell;
 }
@@ -38,22 +35,34 @@ function attackCell(cell) {
     cell.dataset.hit = true;
 }
 
-function populateBoard(board) {
-    for (let row in board) {
-        for (let col in board) {
-            if (!board[row][col].ship) {
+/**
+ * Display current players board
+ * @param {array} player
+ */
+function populateBoard(player, opponent) {
+    for (let row in player) {
+        for (let col in player) {
+            if (!player[row][col].ship) {
                 continue;
             }
 
-            const ship = board[row][col].ship;
-            const cell = document.querySelector(
-                `.board div[data-x='${row}'][data-y='${col}']`
+            const ship = player[row][col].ship;
+            let cell = playerBoard.querySelector(
+                `div[data-x='${row}'][data-y='${col}']`
             );
 
             cell.dataset.ship = ship.name;
+
+            cell = hitBoard.querySelector(
+                `div[data-x='${row}'][data-y='${col}']`
+            );
         }
     }
 }
+
+/**
+ * Diplay current player's hitboard
+ */
 
 function resetBoard() {
     const cells = document.querySelectorAll(`.board .cell`);

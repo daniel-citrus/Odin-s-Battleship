@@ -4,16 +4,23 @@ body {
     background: $background-color;
 }
 
-div {
-    border: 1px solid white;
-}
+.boards {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 20px;
 
-.board {
-    height: 200px;
-    width: 200px;
+    #current,
+    #opponent {
+        height: 200px;
+        width: 200px;
 
-    display: grid;
-    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+        display: grid;
+        grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    }
+
+    div {
+        border: 1px solid white;
+    }
 
     [data-ship='Battleship'] {
         background: orange;
@@ -42,7 +49,7 @@ div {
         }
 
         & {
-            background: rgb(119, 0, 0)
+            background: rgb(119, 0, 0);
         }
     }
 }
