@@ -4,11 +4,10 @@ import { Player } from './player';
 
 const player = new Player();
 const opponent = new Player();
-display.buildBoard();
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
+display.buildBoard(player.board.board);
 display.buildHitBoard(player.board.board);
-display.populateBoards(player.board.board);
 
 export function attack(x, y) {
     return player.board.attack(x, y);

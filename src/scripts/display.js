@@ -2,14 +2,17 @@ const body = document.querySelector('body');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, buildHitBoard, populateBoards, resetBoard };
-export { buildBoard, buildHitBoard, populateBoards, resetBoard };
+export { buildBoard, buildHitBoard, resetBoard };
 import * as brain from './index';
 
-function buildBoard(dim = 10) {
-    for (let row = 0; row < dim; row++) {
-        for (let col = 0; col < dim; col++) {
-            playerBoard.appendChild(buildCell(row, col, false));
+function buildBoard(boardArray) {
+    for (let row in boardArray) {
+        for (let col in boardArray) {
+            const ship = boardArray[row][col].ship;
+            const hit = boardArray[row][col].hit;
+            const cell = buildCell(row, col, false, hit);
+            cell.dataset.ship = ship.name;
+            playerBoard.appendChild(cell);
         }
     }
 }
@@ -23,7 +26,7 @@ function buildHitBoard(boardArray) {
             const hit = coords.hit;
             const ship = coords.ship ? true : false;
 
-            let cellStatus;
+            /* let cellStatus;
 
             if (hit === null) {
                 cellStatus = null;
@@ -31,9 +34,9 @@ function buildHitBoard(boardArray) {
                 cellStatus = ship ? true : false;
             } else {
                 cellStatus = false;
-            }
+            } */
 
-            // let cellStatus = hit === null ? null : hit && ship;
+            let cellStatus = hit === null ? null : hit && ship;
 
             const cell = buildCell(row, col, true, cellStatus);
             hitBoard.appendChild(cell);
@@ -73,31 +76,6 @@ function attackCell(cell) {
         cell.dataset.hit = true;
     } else {
         cell.dataset.hit = false;
-    }
-}
-
-/**
- * Display board using board array
- * @param {array} boardArray
- */
-function populateBoards(boardArray, opponentArray) {
-    for (let row in boardArray) {
-        for (let col in boardArray) {
-            if (!boardArray[row][col].ship) {
-                continue;
-            }
-
-            const ship = boardArray[row][col].ship;
-            let cell = playerBoard.querySelector(
-                `div[data-x='${row}'][data-y='${col}']`
-            );
-
-            cell.dataset.ship = ship.name;
-
-            cell = hitBoard.querySelector(
-                `div[data-x='${row}'][data-y='${col}']`
-            );
-        }
     }
 }
 
