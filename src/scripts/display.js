@@ -3,6 +3,7 @@ const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
 export { buildBoard, buildHitBoard, populateBoards, resetBoard };
+export { buildBoard, buildHitBoard, populateBoards, resetBoard };
 import * as brain from './index';
 
 function buildBoard(dim = 10) {
@@ -18,20 +19,35 @@ function buildHitBoard(boardArray) {
 
     for (let row = 0; row < dim; row++) {
         for (let col = 0; col < dim; col++) {
-            const cell = buildCell(row, col, true);
-            console.log(boardArray[row][col]);
+            const coords = boardArray[row][col];
+            const hit = coords.hit;
+            const ship = coords.ship ? true : false;
+
+            let cellStatus;
+
+            if (hit === null) {
+                cellStatus = null;
+            } else if (hit) {
+                cellStatus = ship ? true : false;
+            } else {
+                cellStatus = false;
+            }
+
+            // let cellStatus = hit === null ? null : hit && ship;
+
+            const cell = buildCell(row, col, true, cellStatus);
             hitBoard.appendChild(cell);
         }
     }
 }
 
-function buildCell(x, y, attackable = false) {
+function buildCell(x, y, attackable = false, hit = null) {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
     cell.dataset.x = x;
     cell.dataset.y = y;
-    cell.dataset.hit = null;
+    cell.dataset.hit = hit;
 
     if (attackable) {
         cell.addEventListener('click', () => {
