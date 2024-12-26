@@ -2,9 +2,11 @@ import '../style/style.scss';
 import * as display from './display';
 import { Player } from './player';
 
-display.buildBoard();
 const player = new Player();
 const opponent = new Player();
+display.buildBoard();
+player.board.attack(0, 0);
+display.buildHitBoard(player.board.board);
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
 display.populateBoards(player.board.board);

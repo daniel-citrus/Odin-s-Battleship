@@ -2,19 +2,30 @@ const body = document.querySelector('body');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, populateBoards, resetBoard };
+export { buildBoard, buildHitBoard, populateBoards, resetBoard };
 import * as brain from './index';
 
 function buildBoard(dim = 10) {
     for (let row = 0; row < dim; row++) {
         for (let col = 0; col < dim; col++) {
             playerBoard.appendChild(buildCell(row, col, false));
-            hitBoard.appendChild(buildCell(row, col, true));
         }
     }
 }
 
-function buildCell(x, y, hit = false) {
+function buildHitBoard(boardArray) {
+    const dim = boardArray.length;
+
+    for (let row = 0; row < dim; row++) {
+        for (let col = 0; col < dim; col++) {
+            const cell = buildCell(row, col, true);
+            console.log(boardArray[row][col]);
+            hitBoard.appendChild(cell);
+        }
+    }
+}
+
+function buildCell(x, y, attackable = false) {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
@@ -22,7 +33,7 @@ function buildCell(x, y, hit = false) {
     cell.dataset.y = y;
     cell.dataset.hit = null;
 
-    if (hit) {
+    if (attackable) {
         cell.addEventListener('click', () => {
             attackCell(cell);
         });
@@ -36,12 +47,16 @@ function attackCell(cell) {
     const y = cell.dataset.y;
 
     const result = brain.attack(x, y);
+
+    // already hit
+    if (result === null) {
+        return;
+    }
+
     if (result) {
         cell.dataset.hit = true;
-    } else if (result === false) {
-        cell.dataset.hit = false;
     } else {
-        console.log('already hit');
+        cell.dataset.hit = false;
     }
 }
 
@@ -69,22 +84,6 @@ function populateBoards(boardArray, opponentArray) {
         }
     }
 }
-
-/**
- * Display current player's board
- * @param {array} array
- */
-function populatePlayerBoard(array) {}
-
-/**
- * Display hitboard using opponents board
- * @param {array} array - other player's array
- */
-function populateHitBoard(array) {}
-
-/**
- * Diplay current player's hitboard
- */
 
 function resetBoard() {
     const cells = document.querySelectorAll(`.board .cell`);
