@@ -5,10 +5,9 @@ import { Player } from './player';
 const player = new Player();
 const opponent = new Player();
 display.buildBoard();
-player.board.attack(0, 0);
-display.buildHitBoard(player.board.board);
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
+display.buildHitBoard(player.board.board);
 display.populateBoards(player.board.board);
 
 export function attack(x, y) {

@@ -194,13 +194,11 @@ class Gameboard {
         return this.board;
     }
 
-    // Sink all ships on the board
-    hitAllShips() {
+    // Hit all cells on the board
+    hitAllCells() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
-                if (this.board[row][col].ship !== false) {
-                    this.board[row][col].hit = true;
-                }
+                this.board[row][col].hit = true;
             }
         }
     }
