@@ -142,7 +142,7 @@ class Gameboard {
      * Attack coordinates
      * @param {number} x
      * @param {number} y
-     * @returns {boolean} successful attack
+     * @returns {*} true - successful attack, false - missed, null - already hit
      */
     attack(x, y) {
         const target = this.board[x][y];

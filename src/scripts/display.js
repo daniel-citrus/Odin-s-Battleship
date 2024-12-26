@@ -2,7 +2,7 @@ const body = document.querySelector('body');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, hitCell, missCell, populateBoards, resetBoard };
+export { buildBoard, populateBoards, resetBoard };
 import * as brain from './index';
 
 function buildBoard(dim = 10) {
@@ -20,8 +20,7 @@ function buildCell(x, y, hit = false) {
     cell.classList.add('cell');
     cell.dataset.x = x;
     cell.dataset.y = y;
-    cell.dataset.hit = false;
-    cell.dataset.ship = false;
+    cell.dataset.hit = null;
 
     if (hit) {
         cell.addEventListener('click', () => {
@@ -38,26 +37,12 @@ function attackCell(cell) {
 
     const result = brain.attack(x, y);
     if (result) {
-        hitCell(cell);
+        cell.dataset.hit = true;
     } else if (result === false) {
-        missCell(cell);
+        cell.dataset.hit = false;
+    } else {
+        console.log('already hit');
     }
-}
-
-/**
- * Mark cell as a hit
- * @param {element} cell
- */
-function hitCell(cell) {
-    cell.classList.add('hit');
-}
-
-/**
- * Mark cell as a miss
- * @param {element} cell
- */
-function missCell(cell) {
-    cell.classList.add('miss');
 }
 
 /**

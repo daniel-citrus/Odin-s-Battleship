@@ -40,16 +40,11 @@ body {
 
     /* hit */
     [data-hit='true'] {
-        &[data-ship='Battleship'],
-        &[data-ship='Submarine'],
-        &[data-ship='Destroyer'],
-        &[data-ship='Cruiser'],
-        &[data-ship='Carrier'] {
-            background: red;
-        }
+        background: red;
+    }
 
-        & {
-            background: rgb(119, 0, 0);
-        }
+    /* missed */
+    [data-hit='false'] {
+        background: rgb(121, 121, 121);
     }
 }
