@@ -2,24 +2,41 @@ import '../style/style.scss';
 import * as display from './display';
 import { Player } from './player';
 
-const player = new Player();
-const opponent = new Player();
+/*
+
+initial setup
+    display current player board
+    display hit board (attacks opponent)
+ 
+ attack hitboard
+    update opponent board
+    
+    if direct hit
+        check if all ships destroyed
+            if yes
+                current player wins
+                return
+    
+    switch players
+*/
+
+let currentPlayer = 0; // 0 = Player, 1 = Opponent
+let player = new Player();
+let opponent = new Player();
+let players = [player, opponent];
+
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
-display.buildBoard(player.board.board);
-display.buildHitBoard(player.board.board);
+display.buildBoard(players[currentPlayer].board.board);
+display.buildHitBoard(players[otherPlayer()].board.board);
+
+function startGame() {}
+function gameover() { }
+
+function otherPlayer() {
+    return 0 ? 1 : 0;
+}
 
 export function attack(x, y) {
     return player.board.attack(x, y);
 }
-
-// game loop
-// set current player: 1
-// attack player 2
-// check if all ships on player 2 have been sunk
-// if all sunk, player 1 wins
-// else switch current player
-// if mode is 'computer,' auto attack for computer
-
-function startGame() {}
-function playerWins() {}

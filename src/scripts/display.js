@@ -5,6 +5,7 @@ export { buildBoard, buildHitBoard, resetBoard };
 import * as brain from './index';
 
 function buildBoard(boardArray) {
+    playerBoard.textContent = '';
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
