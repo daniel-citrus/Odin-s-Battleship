@@ -23,21 +23,12 @@ initial setup
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
 let player = new Player();
 let opponent = new Computer();
-let players = [player, opponent];
-
-players[currentPlayer].board.randomizeBoard();
-players[otherPlayer()].board.randomizeBoard();
-
-/* opponent.randomAttack(); */
-console.log(opponent.board);
-display.buildBoard(opponent.board.board);
-display.buildHitBoard(opponent.board.board);
 
 function startGame() {}
 function gameover() {}
 
 function otherPlayer() {
-    return 0 ? 1 : 0;
+    return currentPlayer === 0 ? 1 : 0;
 }
 
 export function attack(x, y) {

@@ -6,6 +6,7 @@ import * as brain from './index';
 
 function buildBoard(boardArray) {
     playerBoard.textContent = '';
+
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
@@ -17,6 +18,8 @@ function buildBoard(boardArray) {
 }
 
 function buildHitBoard(boardArray) {
+    hitBoard.textContent = '';
+
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
@@ -66,6 +69,7 @@ function attackCell(cell) {
 
     const result = brain.attack(x, y);
     let cellStatus;
+    console.log(result);
 
     // already hit
     if (result === null) {
