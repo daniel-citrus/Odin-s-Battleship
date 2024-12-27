@@ -1,6 +1,6 @@
 import '../style/style.scss';
 import * as display from './display';
-import { Player } from './player';
+import { Computer, Player } from './player';
 
 /*
 
@@ -22,16 +22,19 @@ initial setup
 
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
 let player = new Player();
-let opponent = new Player();
+let opponent = new Computer();
 let players = [player, opponent];
 
-player.board.randomizeBoard();
-opponent.board.randomizeBoard();
-display.buildBoard(players[currentPlayer].board.board);
-display.buildHitBoard(players[otherPlayer()].board.board);
+players[currentPlayer].board.randomizeBoard();
+players[otherPlayer()].board.randomizeBoard();
+
+/* opponent.randomAttack(); */
+console.log(opponent.board);
+display.buildBoard(opponent.board.board);
+display.buildHitBoard(opponent.board.board);
 
 function startGame() {}
-function gameover() { }
+function gameover() {}
 
 function otherPlayer() {
     return 0 ? 1 : 0;
