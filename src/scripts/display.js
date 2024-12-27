@@ -68,7 +68,7 @@ function attackCell(cell) {
 
     // already hit
     if (result === null) {
-        cellStatus = 'unhit';
+        return;
     }
 
     if (result) {
