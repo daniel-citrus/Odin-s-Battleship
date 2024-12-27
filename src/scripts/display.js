@@ -1,4 +1,3 @@
-const body = document.querySelector('body');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
@@ -7,50 +6,49 @@ import * as brain from './index';
 
 function buildBoard(boardArray) {
     for (let row in boardArray) {
-        for (let col in boardArray) {
-            const ship = boardArray[row][col].ship;
-            const hit = boardArray[row][col].hit;
-            const cell = buildCell(row, col, false, hit);
-            cell.dataset.ship = ship.name;
+        for (let col in boardArray[row]) {
+            const coords = boardArray[row][col];
+            const cell = buildCell(row, col, false, shipStatus(coords));
+            cell.dataset.ship = coords.ship.name;
             playerBoard.appendChild(cell);
         }
     }
 }
 
 function buildHitBoard(boardArray) {
-    const dim = boardArray.length;
-
-    for (let row = 0; row < dim; row++) {
-        for (let col = 0; col < dim; col++) {
+    for (let row in boardArray) {
+        for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const hit = coords.hit;
-            const ship = coords.ship ? true : false;
-
-            /* let cellStatus;
-
-            if (hit === null) {
-                cellStatus = null;
-            } else if (hit) {
-                cellStatus = ship ? true : false;
-            } else {
-                cellStatus = false;
-            } */
-
-            let cellStatus = hit === null ? null : hit && ship;
-
-            const cell = buildCell(row, col, true, cellStatus);
+            const cell = buildCell(row, col, true, shipStatus(coords));
             hitBoard.appendChild(cell);
         }
     }
 }
 
-function buildCell(x, y, attackable = false, hit = null) {
+/**
+ * @param {*} coords - board array cell object
+ * @returns {string}
+ */
+function shipStatus(coords) {
+    const hit = coords.hit;
+    const ship = coords.ship ? true : false;
+
+    if (hit === null) {
+        return 'unhit';
+    } else if (hit) {
+        return ship ? 'hit' : 'miss';
+    } else {
+        return 'miss';
+    }
+}
+
+function buildCell(x, y, attackable = false, status = 'unhit') {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
     cell.dataset.x = x;
     cell.dataset.y = y;
-    cell.dataset.hit = hit;
+    cell.dataset.status = status;
 
     if (attackable) {
         cell.addEventListener('click', () => {
@@ -66,24 +64,27 @@ function attackCell(cell) {
     const y = cell.dataset.y;
 
     const result = brain.attack(x, y);
+    let cellStatus;
 
     // already hit
     if (result === null) {
-        return;
+        cellStatus = 'unhit';
     }
 
     if (result) {
-        cell.dataset.hit = true;
+        cellStatus = 'hit';
     } else {
-        cell.dataset.hit = false;
+        cellStatus = 'miss';
     }
+
+    cell.dataset.status = cellStatus;
 }
 
 function resetBoard() {
     const cells = document.querySelectorAll(`.board .cell`);
 
     for (let cell of cells) {
-        cell.dataset.hit = false;
+        cell.dataset.status = 'unhit';
         cell.dataset.ship = false;
     }
 }
