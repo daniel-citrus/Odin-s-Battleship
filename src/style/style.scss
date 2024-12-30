@@ -2,6 +2,7 @@ $background-color: rgb(26, 26, 26);
 
 body {
     background: $background-color;
+    color: white;
 }
 
 .boards {
@@ -22,18 +23,10 @@ body {
         border: 1px solid white;
     }
 
-    [data-ship='Battleship'] {
-        background: orange;
-    }
-    [data-ship='Submarine'] {
-        background: yellow;
-    }
-    [data-ship='Destroyer'] {
-        background: green;
-    }
-    [data-ship='Cruiser'] {
-        background: red;
-    }
+    [data-ship='Battleship'],
+    [data-ship='Submarine'],
+    [data-ship='Destroyer'],
+    [data-ship='Cruiser'],
     [data-ship='Carrier'] {
         background: blue;
     }

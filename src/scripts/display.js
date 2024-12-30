@@ -1,7 +1,8 @@
+const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, buildHitBoard, resetBoard };
+export { buildBoard, buildHitBoard, resetBoard, setCurrentPlayer };
 import * as brain from './index';
 
 function buildBoard(boardArray) {
@@ -10,7 +11,7 @@ function buildBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, false, shipStatus(coords));
+            const cell = buildCell(row, col, false, cellStatus(coords));
             cell.dataset.ship = coords.ship.name;
             playerBoard.appendChild(cell);
         }
@@ -23,7 +24,7 @@ function buildHitBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, true, shipStatus(coords));
+            const cell = buildCell(row, col, true, cellStatus(coords));
             hitBoard.appendChild(cell);
         }
     }
@@ -33,7 +34,7 @@ function buildHitBoard(boardArray) {
  * @param {*} coords - board array cell object
  * @returns {string}
  */
-function shipStatus(coords) {
+function cellStatus(coords) {
     const hit = coords.hit;
     const ship = coords.ship ? true : false;
 
@@ -69,7 +70,6 @@ function attackCell(cell) {
 
     const result = brain.attack(x, y);
     let cellStatus;
-    console.log(result);
 
     // already hit
     if (result === null) {
@@ -92,4 +92,8 @@ function resetBoard() {
         cell.dataset.status = 'unhit';
         cell.dataset.ship = false;
     }
+}
+
+function setCurrentPlayer(player) {
+    currentPlayer.textContent = player;
 }

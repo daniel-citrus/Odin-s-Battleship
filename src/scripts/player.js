@@ -24,8 +24,6 @@ class Computer extends Player {
             x = this.#getRandomInt(dim);
             y = this.#getRandomInt(dim);
         } while (board[x][y].ship);
-
-        console.log(board[x][y]);
     }
 
     smartAttack() {}

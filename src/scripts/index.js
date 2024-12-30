@@ -22,15 +22,40 @@ initial setup
 
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
 let player = new Player();
-let opponent = new Computer();
+let opponent = new Player();
 
-function startGame() {}
+player.board.randomizeBoard();
+opponent.board.randomizeBoard();
+
+const players = [player, opponent];
+
+startGame();
+
+function startGame() {
+    display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
+    display.buildBoard(players[currentPlayer].board.board);
+    display.buildHitBoard(players[otherPlayer()].board.board);
+}
 function gameover() {}
 
 function otherPlayer() {
     return currentPlayer === 0 ? 1 : 0;
 }
 
+function switchPlayers() {
+    currentPlayer = otherPlayer();
+    display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
+    display.buildBoard(players[currentPlayer].board.board);
+    display.buildHitBoard(players[otherPlayer()].board.board);
+}
+
 export function attack(x, y) {
-    return player.board.attack(x, y);
+    const status = players[otherPlayer()].board.attack(x, y);
+
+    if (status === false) {
+        console.log('switch players');
+        switchPlayers();
+    } else {
+        return status;
+    }
 }
