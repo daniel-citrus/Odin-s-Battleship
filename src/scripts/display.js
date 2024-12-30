@@ -2,7 +2,14 @@ const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { buildBoard, buildHitBoard, resetBoard, setCurrentPlayer };
+export {
+    attackCell,
+    buildBoard,
+    buildHitBoard,
+    getCell,
+    resetBoard,
+    setCurrentPlayer,
+};
 import * as brain from './index';
 
 function buildBoard(boardArray) {
@@ -57,7 +64,7 @@ function buildCell(x, y, attackable = false, status = 'unhit') {
 
     if (attackable) {
         cell.addEventListener('click', () => {
-            attackCell(cell);
+            attackCell(x, y);
         });
     }
 
@@ -83,6 +90,10 @@ function attackCell(cell) {
     }
 
     cell.dataset.status = cellStatus;
+}
+
+function getCell(x, y) {
+    return document.querySelector(`.board .cell[data-x='${x}'][data-y='${y}']`);
 }
 
 function resetBoard() {

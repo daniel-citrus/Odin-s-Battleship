@@ -11,11 +11,13 @@ class Player {
 class Computer extends Player {
     constructor() {
         super();
+        this.hits = []; // coordinates of ship hits
+        this.misses = []; // coordinates of misses
         this.type = 'computer';
     }
 
-    randomAttack() {
-        const board = this.board.board;
+    randomAttack(opponent) {
+        const board = opponent.board.board;
         const dim = board.length;
 
         let x, y;
@@ -23,7 +25,11 @@ class Computer extends Player {
         do {
             x = this.#getRandomInt(dim);
             y = this.#getRandomInt(dim);
-        } while (board[x][y].ship);
+        } while (board[x][y].hit);
+
+        console.log(board[x][y]);
+
+        return { x, y };
     }
 
     smartAttack() {}

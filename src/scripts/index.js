@@ -22,20 +22,20 @@ initial setup
 
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
 let player = new Player();
-let opponent = new Player();
+let opponent = new Computer();
+const players = [player, opponent];
 
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
 
-const players = [player, opponent];
-
-startGame();
+/* startGame(); */
 
 function startGame() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
     display.buildBoard(players[currentPlayer].board.board);
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
+
 function gameover() {}
 
 function otherPlayer() {
