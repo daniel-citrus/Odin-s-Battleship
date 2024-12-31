@@ -28,7 +28,7 @@ const players = [player, opponent];
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
 
-/* startGame(); */
+startGame();
 
 function startGame() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
@@ -53,7 +53,6 @@ export function attack(x, y) {
     const status = players[otherPlayer()].board.attack(x, y);
 
     if (status === false) {
-        console.log('switch players');
         switchPlayers();
     } else {
         return status;

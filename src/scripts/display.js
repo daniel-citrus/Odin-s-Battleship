@@ -2,14 +2,7 @@ const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export {
-    attackCell,
-    buildBoard,
-    buildHitBoard,
-    getCell,
-    resetBoard,
-    setCurrentPlayer,
-};
+export { attackCell, buildBoard, buildHitBoard, resetBoard, setCurrentPlayer };
 import * as brain from './index';
 
 function buildBoard(boardArray) {
@@ -71,29 +64,21 @@ function buildCell(x, y, attackable = false, status = 'unhit') {
     return cell;
 }
 
-function attackCell(cell) {
-    const x = cell.dataset.x;
-    const y = cell.dataset.y;
-
+function attackCell(x, y) {
     const result = brain.attack(x, y);
     let cellStatus;
 
     // already hit
-    if (result === null) {
+    if (!result) {
         return;
     }
 
-    if (result) {
-        cellStatus = 'hit';
-    } else {
-        cellStatus = 'miss';
-    }
-
-    cell.dataset.status = cellStatus;
+    const cell = getCell(x, y);
+    cell.dataset.status = 'hit';
 }
 
 function getCell(x, y) {
-    return document.querySelector(`.board .cell[data-x='${x}'][data-y='${y}']`);
+    return hitBoard.querySelector(`.cell[data-x='${x}'][data-y='${y}']`);
 }
 
 function resetBoard() {
@@ -105,6 +90,10 @@ function resetBoard() {
     }
 }
 
+/**
+ * Update text content of current player element
+ * @param {string} player
+ */
 function setCurrentPlayer(player) {
     currentPlayer.textContent = player;
 }
