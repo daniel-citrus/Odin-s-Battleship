@@ -21,6 +21,7 @@ initial setup
 */
 
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
+let gamemode = 'computer'; // computer or player
 let player = new Player();
 let opponent = new Computer();
 const players = [player, opponent];
@@ -58,3 +59,8 @@ export function attack(x, y) {
         return status;
     }
 }
+
+// if gamemode is computer
+// computer attacks
+// if hit, computer attacks again
+// if miss, switch players

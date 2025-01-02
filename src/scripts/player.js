@@ -27,8 +27,6 @@ class Computer extends Player {
             y = this.#getRandomInt(dim);
         } while (board[x][y].hit);
 
-        console.log(board[x][y]);
-
         return { x, y };
     }
 

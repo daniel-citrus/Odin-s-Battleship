@@ -66,7 +66,6 @@ function buildCell(x, y, attackable = false, status = 'unhit') {
 
 function attackCell(x, y) {
     const result = brain.attack(x, y);
-    let cellStatus;
 
     // already hit
     if (!result) {
