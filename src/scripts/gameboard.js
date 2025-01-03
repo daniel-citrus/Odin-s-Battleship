@@ -153,12 +153,12 @@ class Gameboard {
 
         this.board[x][y].hit = true;
 
-        if (target.ship) {
-            target.ship.hit();
-            return true;
+        if (!target.ship) {
+            return false;
         }
 
-        return false;
+        target.ship.hit();
+        return true;
     }
 
     clearShips() {

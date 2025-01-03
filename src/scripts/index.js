@@ -54,13 +54,22 @@ export function attack(x, y) {
     const status = players[otherPlayer()].board.attack(x, y);
 
     if (status === false) {
-        switchPlayers();
-    } else {
-        return status;
+        if (gamemode === 'computer') {
+            computerAttack(players[otherPlayer()], players[currentPlayer]);
+            startGame();
+        } else {
+            switchPlayers();
+        }
     }
+
+    return status;
 }
 
-// if gamemode is computer
-// computer attacks
-// if hit, computer attacks again
-// if miss, switch players
+function computerAttack(computer, opponent) {
+    let status = true;
+
+    while (status) {
+        let { x, y } = computer.randomAttack(opponent);
+        status = opponent.board.attack(x, y);
+    }
+}
