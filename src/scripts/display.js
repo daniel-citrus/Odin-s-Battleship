@@ -2,8 +2,25 @@ const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-export { attackCell, buildBoard, buildHitBoard, resetBoard, setCurrentPlayer };
+const currentLose = document.querySelector('#current+button');
+const otherLose = document.querySelector('#opponent+button');
+
+export {
+    attackCell,
+    buildBoard,
+    buildHitBoard,
+    resetBoard,
+    setCurrentPlayer,
+    gameover,
+};
 import * as brain from './index';
+
+currentLose.addEventListener('click', () => {
+    brain.currentLose();
+});
+otherLose.addEventListener('click', () => {
+    brain.otherLose();
+});
 
 function buildBoard(boardArray) {
     playerBoard.textContent = '';
@@ -81,6 +98,10 @@ function attackCell(x, y) {
 
     const cell = getCell(x, y);
     cell.dataset.status = 'hit';
+}
+
+function gameover(winner) {
+    console.log(`${winner} has won!`);
 }
 
 function getCell(x, y) {

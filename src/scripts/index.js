@@ -29,9 +29,18 @@ const players = [player, opponent];
 player.board.randomizeBoard();
 opponent.board.randomizeBoard();
 
-startGame();
+export function currentLose() {
+    players[currentPlayer].board.hitAllCells();
+    refreshBoards();
+}
+export function otherLose() {
+    players[otherPlayer()].board.hitAllCells();
+    refreshBoards();
+}
 
-function startGame() {
+refreshBoards();
+
+function refreshBoards() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
     display.buildBoard(players[currentPlayer].board.board);
     display.buildHitBoard(players[otherPlayer()].board.board);
@@ -53,10 +62,16 @@ function switchPlayers() {
 export function attack(x, y) {
     const status = players[otherPlayer()].board.attack(x, y);
 
-    if (status === false) {
+    if (status) {
+        if (players[otherPlayer()].board.allShipsDestroyed) {
+            display.gameover(`Player ${currentPlayer + 1}`);
+        }
+    }
+    // player attacked and missed
+    else if (status === false) {
         if (gamemode === 'computer') {
             computerAttack(players[otherPlayer()], players[currentPlayer]);
-            startGame();
+            refreshBoards();
         } else {
             switchPlayers();
         }
