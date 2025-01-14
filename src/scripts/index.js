@@ -70,8 +70,8 @@ export function attack(x, y) {
     // player attacked and missed
     else if (status === false) {
         if (gamemode === 'computer') {
-            computerAttack(players[otherPlayer()], players[currentPlayer]);
             refreshBoards();
+            computerAttack(players[otherPlayer()], players[currentPlayer]);
         } else {
             switchPlayers();
         }
@@ -84,7 +84,10 @@ function computerAttack(computer, opponent) {
     let status = true;
 
     while (status) {
-        let { x, y } = computer.randomAttack(opponent);
-        status = opponent.board.attack(x, y);
+        setTimeout(() => {
+            let { x, y } = computer.randomAttack(opponent);
+            status = opponent.board.attack(x, y);
+            refreshBoards();
+        }, 2000);
     }
 }
