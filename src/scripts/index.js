@@ -80,14 +80,21 @@ export function attack(x, y) {
     return status;
 }
 
-function computerAttack(computer, opponent) {
+const delay = (ms) => {
+    return new Promise((res) => setTimeout(res, ms));
+};
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+async function computerAttack(computer, opponent) {
     let status = true;
 
     while (status) {
-        setTimeout(() => {
-            let { x, y } = computer.randomAttack(opponent);
-            status = opponent.board.attack(x, y);
-            refreshBoards();
-        }, 2000);
+        await delay(randomNumber(500, 1150));
+        let { x, y } = computer.randomAttack(opponent);
+        status = opponent.board.attack(x, y);
+        refreshBoards();
     }
 }
