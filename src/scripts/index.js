@@ -2,23 +2,22 @@ import '../style/style.scss';
 import * as display from './display';
 import { Computer, Player } from './player';
 
+export { attack, currentLose, otherLose, startGame };
+
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
-let gamemode = 'player'; // computer or player
-let player = new Player();
-let opponent = new Computer();
-const players = [player, opponent];
+let gamemode; // computer or player
+let player;
+let opponent;
+let players;
 
-player.board.randomizeBoard();
-opponent.board.randomizeBoard();
-
-export function currentLose() {
+function currentLose() {
     const p = players[currentPlayer];
     p.board.hitAllCells();
     refreshBoards();
 
     gameover(currentPlayer);
 }
-export function otherLose() {
+function otherLose() {
     const p = players[otherPlayer()];
     p.board.hitAllCells();
     refreshBoards();
@@ -26,12 +25,20 @@ export function otherLose() {
     gameover(otherPlayer());
 }
 
-refreshBoards();
-
 function refreshBoards() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
     display.buildBoard(players[currentPlayer].board.board);
     display.buildHitBoard(players[otherPlayer()].board.board);
+}
+
+function startGame() {
+    player = new Player();
+    opponent = new Computer();
+    players = [player, opponent];
+
+    player.board.randomizeBoard();
+    opponent.board.randomizeBoard();
+    refreshBoards();
 }
 
 /**
@@ -53,7 +60,7 @@ function switchPlayers() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
-export function attack(x, y) {
+function attack(x, y) {
     const status = players[otherPlayer()].board.attack(x, y);
 
     if (status) {

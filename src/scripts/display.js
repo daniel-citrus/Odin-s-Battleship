@@ -1,9 +1,15 @@
+const boards = document.querySelector('.boards');
 const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
 const currentLose = document.querySelector('#current+button');
 const otherLose = document.querySelector('#opponent+button');
+
+const startMenu = document.querySelector('form.startMenu');
+const gamemodes = startMenu.querySelectorAll('.mode input');
+const difficulty = startMenu.querySelector('.difficulty');
+const startButton = startMenu.querySelector('button');
 
 export {
     attackCell,
@@ -22,6 +28,28 @@ currentLose.addEventListener('click', () => {
 otherLose.addEventListener('click', () => {
     brain.otherLose();
 });
+
+gamemodes.forEach((option) => {
+    option.addEventListener('click', () => {
+        if (option.value === 'player') {
+            difficulty.classList.add('hidden');
+        } else {
+            difficulty.classList.remove('hidden');
+        }
+    });
+});
+
+startButton.addEventListener('click', () => {
+    const gameMode = startMenu.querySelector('input:checked').value;
+    brain.startGame();
+    startGame();
+});
+
+function startGame() {
+    startMenu.classList.add('hidden');
+    currentPlayer.classList.remove('hidden');
+    boards.classList.remove('hidden');
+}
 
 function buildBoard(boardArray) {
     playerBoard.textContent = '';

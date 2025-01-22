@@ -7,11 +7,6 @@
     <script defer src="bundle.js"></script></head>
     <body>
         <form class="startMenu">
-            <!-- 
-                game mode
-                if gamemode is computer, difficulty
-                start buttonl
-            -->
             <fieldset class="mode">
                 <input
                     type="radio"
@@ -30,7 +25,7 @@
                 <label for="computer">Computer</label>
             </fieldset>
 
-            <fieldset class="difficulty">
+            <fieldset class="difficulty hidden">
                 <input
                     type="radio"
                     name="difficulty"
@@ -47,6 +42,7 @@
                 />
                 <label for="clever">Clever</label>
             </fieldset>
+            <button type="button">Start Game</button>
         </form>
         <div class="currentPlayer hidden">Player 1</div>
         <div class="boards hidden">

@@ -57,9 +57,3 @@ body {
 .hidden {
     display: none;
 }
-
-.startMenu {
-    .mode input#player:checked + .difficulty  {
-display: none;
-    }
-}
