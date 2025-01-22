@@ -9,6 +9,7 @@ export {
     attackCell,
     buildBoard,
     buildHitBoard,
+    toggleHitBoard,
     resetBoard,
     setCurrentPlayer,
     gameover,
@@ -123,4 +124,12 @@ function resetBoard() {
  */
 function setCurrentPlayer(player) {
     currentPlayer.textContent = player;
+}
+
+function toggleHitBoard(disable = false) {
+    if (disable) {
+        hitBoard.classList.add('disabled');
+    } else {
+        hitBoard.classList.remove('disabled');
+    }
 }

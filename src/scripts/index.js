@@ -2,26 +2,8 @@ import '../style/style.scss';
 import * as display from './display';
 import { Computer, Player } from './player';
 
-/*
-
-initial setup
-    display current player board
-    display hit board (attacks opponent)
- 
- attack hitboard
-    update opponent board
-    
-    if direct hit
-        check if all ships destroyed
-            if yes
-                current player wins
-                return
-    
-    switch players
-*/
-
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
-let gamemode = 'computer'; // computer or player
+let gamemode = 'player'; // computer or player
 let player = new Player();
 let opponent = new Computer();
 const players = [player, opponent];
@@ -30,12 +12,18 @@ player.board.randomizeBoard();
 opponent.board.randomizeBoard();
 
 export function currentLose() {
-    players[currentPlayer].board.hitAllCells();
+    const p = players[currentPlayer];
+    p.board.hitAllCells();
     refreshBoards();
+
+    gameover(currentPlayer);
 }
 export function otherLose() {
-    players[otherPlayer()].board.hitAllCells();
+    const p = players[otherPlayer()];
+    p.board.hitAllCells();
     refreshBoards();
+
+    gameover(otherPlayer());
 }
 
 refreshBoards();
@@ -46,7 +34,13 @@ function refreshBoards() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
-function gameover() {}
+/**
+ * Declare player as the winner
+ * @param {object} player
+ */
+function gameover(player) {
+    console.log(player + 1);
+}
 
 function otherPlayer() {
     return currentPlayer === 0 ? 1 : 0;
@@ -69,8 +63,9 @@ export function attack(x, y) {
     }
     // player attacked and missed
     else if (status === false) {
+        refreshBoards();
+
         if (gamemode === 'computer') {
-            refreshBoards();
             computerAttack(players[otherPlayer()], players[currentPlayer]);
         } else {
             switchPlayers();
@@ -91,10 +86,16 @@ function randomNumber(min, max) {
 async function computerAttack(computer, opponent) {
     let status = true;
 
+    display.toggleHitBoard(true);
+
     while (status) {
         await delay(randomNumber(500, 1150));
         let { x, y } = computer.randomAttack(opponent);
         status = opponent.board.attack(x, y);
         refreshBoards();
+
+        // if computer won, gameover
     }
+
+    display.toggleHitBoard(false);
 }

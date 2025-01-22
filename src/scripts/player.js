@@ -1,5 +1,6 @@
 /* const Gameboard = require('./gameboard'); */
 import Gameboard from './gameboard';
+import * as bot from './bot';
 
 class Player {
     constructor() {
@@ -17,23 +18,11 @@ class Computer extends Player {
     }
 
     randomAttack(opponent) {
-        const board = opponent.board.board;
-        const dim = board.length;
-
-        let x, y;
-
-        do {
-            x = this.#getRandomInt(dim);
-            y = this.#getRandomInt(dim);
-        } while (board[x][y].hit);
-
-        return { x, y };
+        return bot.randomAttack(opponent);
     }
 
-    smartAttack() {}
-
-    #getRandomInt(max) {
-        return Math.floor(Math.random() * max);
+    smartAttack(opponent) {
+        return bot.smartAttack(opponent);
     }
 }
 

@@ -22,6 +22,15 @@ body {
 
         display: grid;
         grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+
+        &.disabled {
+            pointer-events: none;
+            background: black;
+        }
+    }
+
+    #opponent .cell[data-status='unhit'] {
+        cursor: pointer;
     }
 
     div {
@@ -43,4 +52,8 @@ body {
     [data-status='miss'] {
         background: rgb(121, 121, 121);
     }
+}
+
+.hidden {
+    display: none;
 }
