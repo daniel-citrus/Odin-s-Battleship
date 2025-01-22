@@ -7,7 +7,46 @@
     </head>
     <body>
         <form class="startMenu">
-            
+            <!-- 
+                game mode
+                if gamemode is computer, difficulty
+                start buttonl
+            -->
+            <fieldset class="mode">
+                <input
+                    type="radio"
+                    name="gamemode"
+                    id="player"
+                    value="player"
+                    checked
+                />
+                <label for="player">Player</label>
+                <input
+                    type="radio"
+                    name="gamemode"
+                    id="computer"
+                    value="computer"
+                />
+                <label for="computer">Computer</label>
+            </fieldset>
+
+            <fieldset class="difficulty">
+                <input
+                    type="radio"
+                    name="difficulty"
+                    id="random"
+                    value="random"
+                />
+                <label for="random">Random</label>
+                <input
+                    type="radio"
+                    name="difficulty"
+                    id="clever"
+                    value="clever"
+                    checked
+                />
+                <label for="clever">Clever</label>
+            </fieldset>
         </form>
         <div class="currentPlayer hidden">Player 1</div>
         <div class="boards hidden">
