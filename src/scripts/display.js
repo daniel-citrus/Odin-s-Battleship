@@ -50,6 +50,17 @@ restartButton.addEventListener('click', () => {
     restartGame();
 });
 
+exitButton.addEventListener('click', () => {
+    exitGame();
+});
+
+function exitGame() {
+    gameoverPopUp.classList.add('hidden');
+    startMenu.classList.remove('hidden');
+    currentPlayer.classList.add('hidden');
+    boards.classList.add('hidden');
+}
+
 function restartGame() {
     gameoverPopUp.classList.add('hidden');
     brain.startGame(

@@ -50,7 +50,6 @@ function startGame(mode, diff) {
  * @param {object} player
  */
 function gameover(player) {
-    console.log(player + 1);
     display.toggleHitBoard(true);
     display.gameover(`Player ${player + 1}`);
 }
