@@ -3,9 +3,6 @@ const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
 
-const currentLose = document.querySelector('#current+button');
-const otherLose = document.querySelector('#opponent+button');
-
 const startMenu = document.querySelector('form.startMenu');
 const gamemodes = startMenu.querySelectorAll('.mode input');
 const difficultyOption = startMenu.querySelector('.difficulty');
@@ -16,18 +13,11 @@ const winnerText = document.getElementById('winner');
 const restartButton = gameoverPopUp.querySelector('button.restart');
 const exitButton = gameoverPopUp.querySelector('button.exit');
 
-startButton.click();
-
-export {
-    attackCell,
-    buildBoard,
-    buildHitBoard,
-    toggleHitBoard,
-    resetBoard,
-    setCurrentPlayer,
-    gameover,
-};
 import * as brain from './index';
+
+/* Development */
+const currentLose = document.querySelector('#current+button');
+const otherLose = document.querySelector('#opponent+button');
 
 currentLose.addEventListener('click', () => {
     brain.currentLose();
@@ -35,6 +25,15 @@ currentLose.addEventListener('click', () => {
 otherLose.addEventListener('click', () => {
     brain.otherLose();
 });
+
+const cells = document.querySelectorAll('.cell');
+cells.forEach((cell) => {
+    console.log('hi');
+    cell.addEventListener('mouseover', () => {
+        console.log('over');
+    });
+});
+/*  */
 
 gamemodes.forEach((mode) => {
     mode.addEventListener('click', () => {
@@ -80,13 +79,13 @@ startButton.addEventListener('click', () => {
     startGame();
 });
 
-function startGame() {
+export function startGame() {
     startMenu.classList.add('hidden');
     currentPlayer.classList.remove('hidden');
     boards.classList.remove('hidden');
 }
 
-function buildBoard(boardArray) {
+export function buildBoard(boardArray) {
     playerBoard.textContent = '';
 
     for (let row in boardArray) {
@@ -99,7 +98,7 @@ function buildBoard(boardArray) {
     }
 }
 
-function buildHitBoard(boardArray) {
+export function buildHitBoard(boardArray) {
     hitBoard.textContent = '';
 
     for (let row in boardArray) {
@@ -145,7 +144,7 @@ function buildCell(x, y, attackable = false, status = 'unhit') {
     return cell;
 }
 
-function attackCell(x, y) {
+export function attackCell(x, y) {
     const result = brain.attack(x, y);
 
     /* if (result === false) {
@@ -164,7 +163,7 @@ function attackCell(x, y) {
     cell.dataset.status = 'hit';
 }
 
-function gameover(winner) {
+export function gameover(winner) {
     boards.classList.add('hidden');
     gameoverPopUp.classList.remove('hidden');
     winnerText.textContent = winner;
@@ -174,7 +173,7 @@ function getCell(x, y) {
     return hitBoard.querySelector(`.cell[data-x='${x}'][data-y='${y}']`);
 }
 
-function resetBoard() {
+export function resetBoard() {
     const cells = document.querySelectorAll(`.board .cell`);
 
     for (let cell of cells) {
@@ -187,11 +186,11 @@ function resetBoard() {
  * Update text content of current player element
  * @param {string} player
  */
-function setCurrentPlayer(player) {
+export function setCurrentPlayer(player) {
     currentPlayer.textContent = player;
 }
 
-function toggleHitBoard(disable = false) {
+export function toggleHitBoard(disable = false) {
     if (disable) {
         hitBoard.classList.add('disabled');
     } else {

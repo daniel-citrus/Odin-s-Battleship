@@ -11,6 +11,9 @@ let opponent;
 let players;
 let difficulty;
 
+startGame('computer', 'random');
+display.startGame();
+
 function currentLose() {
     const p = players[currentPlayer];
     p.board.hitAllCells();
