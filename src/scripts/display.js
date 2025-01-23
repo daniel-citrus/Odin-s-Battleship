@@ -8,7 +8,7 @@ const otherLose = document.querySelector('#opponent+button');
 
 const startMenu = document.querySelector('form.startMenu');
 const gamemodes = startMenu.querySelectorAll('.mode input');
-const difficulty = startMenu.querySelector('.difficulty');
+const difficultyOption = startMenu.querySelector('.difficulty');
 const startButton = startMenu.querySelector('button');
 
 export {
@@ -32,16 +32,18 @@ otherLose.addEventListener('click', () => {
 gamemodes.forEach((option) => {
     option.addEventListener('click', () => {
         if (option.value === 'player') {
-            difficulty.classList.add('hidden');
+            difficultyOption.classList.add('hidden');
         } else {
-            difficulty.classList.remove('hidden');
+            difficultyOption.classList.remove('hidden');
         }
     });
 });
 
 startButton.addEventListener('click', () => {
-    const gameMode = startMenu.querySelector('input:checked').value;
-    brain.startGame();
+    const mode = startMenu.querySelector('.mode input:checked').value;
+    const diff = startMenu.querySelector('.difficulty input:checked').value;
+
+    brain.startGame(mode, diff);
     startGame();
 });
 

@@ -4,28 +4,29 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Project</title>
-    <script defer src="bundle.js"></script></head>
+        <script defer src="bundle.js"></script>
+    </head>
     <body>
         <form class="startMenu">
             <fieldset class="mode">
                 <input
                     type="radio"
                     name="gamemode"
-                    id="player"
-                    value="player"
+                    id="computer"
+                    value="computer"
                     checked
                 />
-                <label for="player">Player</label>
+                <label for="computer">Computer</label>
                 <input
                     type="radio"
                     name="gamemode"
-                    id="computer"
-                    value="computer"
+                    id="player"
+                    value="player"
                 />
-                <label for="computer">Computer</label>
+                <label for="player">Player</label>
             </fieldset>
 
-            <fieldset class="difficulty hidden">
+            <fieldset class="difficulty">
                 <input
                     type="radio"
                     name="difficulty"

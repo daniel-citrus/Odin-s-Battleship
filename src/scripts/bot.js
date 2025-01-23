@@ -1,4 +1,4 @@
-export function randomAttack(opponent) {
+function randomAttack(opponent, diff) {
     const board = opponent.board.board;
     const dim = board.length;
     let x, y;
@@ -11,7 +11,15 @@ export function randomAttack(opponent) {
     return { x, y };
 }
 
-export function smartAttack() {}
+function smartAttack() {}
+
+export function attack(opponent, diff) {
+    if (diff === 'random') {
+        return randomAttack(opponent);
+    } else {
+        return smartAttack(opponent);
+    }
+}
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);

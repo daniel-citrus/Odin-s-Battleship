@@ -9,6 +9,7 @@ let gamemode; // computer or player
 let player;
 let opponent;
 let players;
+let difficulty;
 
 function currentLose() {
     const p = players[currentPlayer];
@@ -31,14 +32,17 @@ function refreshBoards() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
-function startGame() {
+function startGame(mode, diff) {
     player = new Player();
-    opponent = new Computer();
+    opponent = new Computer(diff);
     players = [player, opponent];
-
+    gamemode = mode;
+    difficulty = diff;
+    
     player.board.randomizeBoard();
     opponent.board.randomizeBoard();
     refreshBoards();
+    display.toggleHitBoard(false);
 }
 
 /**
@@ -47,6 +51,7 @@ function startGame() {
  */
 function gameover(player) {
     console.log(player + 1);
+    display.toggleHitBoard(true);
 }
 
 function otherPlayer() {
@@ -92,12 +97,11 @@ function randomNumber(min, max) {
 
 async function computerAttack(computer, opponent) {
     let status = true;
-
     display.toggleHitBoard(true);
 
     while (status) {
         await delay(randomNumber(500, 1150));
-        let { x, y } = computer.randomAttack(opponent);
+        let { x, y } = computer.attack(opponent);
         status = opponent.board.attack(x, y);
         refreshBoards();
 
