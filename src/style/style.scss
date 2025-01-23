@@ -54,6 +54,28 @@ body {
     }
 }
 
+.gameover {
+    border: 2px solid white;
+    width: fit-content;
+    padding: 20px 25px;
+    font-size: 1.6rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5px;
+
+    .buttons {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 10px;
+        width: 100%;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
 .hidden {
     display: none;
 }

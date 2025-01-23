@@ -52,9 +52,7 @@ function startGame(mode, diff) {
 function gameover(player) {
     console.log(player + 1);
     display.toggleHitBoard(true);
-    // open winner pop up
-    // restart button, restart the game using the same settings
-    // exit, go back to start menu clear boards
+    display.gameover(`Player ${player + 1}`);
 }
 
 function otherPlayer() {

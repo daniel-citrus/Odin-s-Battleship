@@ -11,6 +11,13 @@ const gamemodes = startMenu.querySelectorAll('.mode input');
 const difficultyOption = startMenu.querySelector('.difficulty');
 const startButton = startMenu.querySelector('button');
 
+const gameoverPopUp = document.querySelector('.gameover');
+const winnerText = document.getElementById('winner');
+const restartButton = gameoverPopUp.querySelector('button.restart');
+const exitButton = gameoverPopUp.querySelector('button.exit');
+
+startButton.click();
+
 export {
     attackCell,
     buildBoard,
@@ -29,9 +36,9 @@ otherLose.addEventListener('click', () => {
     brain.otherLose();
 });
 
-gamemodes.forEach((option) => {
-    option.addEventListener('click', () => {
-        if (option.value === 'player') {
+gamemodes.forEach((mode) => {
+    mode.addEventListener('click', () => {
+        if (mode.value === 'player') {
             difficultyOption.classList.add('hidden');
         } else {
             difficultyOption.classList.remove('hidden');
@@ -39,9 +46,24 @@ gamemodes.forEach((option) => {
     });
 });
 
+restartButton.addEventListener('click', () => {
+    restartGame();
+});
+
+function restartGame() {
+    gameoverPopUp.classList.add('hidden');
+    brain.startGame(
+        localStorage.getItem('mode'),
+        localStorage.getItem('difficulty')
+    );
+    startGame();
+}
+
 startButton.addEventListener('click', () => {
     const mode = startMenu.querySelector('.mode input:checked').value;
     const diff = startMenu.querySelector('.difficulty input:checked').value;
+    localStorage.setItem('mode', mode);
+    localStorage.setItem('difficulty', diff);
 
     brain.startGame(mode, diff);
     startGame();
@@ -132,7 +154,9 @@ function attackCell(x, y) {
 }
 
 function gameover(winner) {
-    console.log(`${winner} has won!`);
+    boards.classList.add('hidden');
+    gameoverPopUp.classList.remove('hidden');
+    winnerText.textContent = winner;
 }
 
 function getCell(x, y) {
