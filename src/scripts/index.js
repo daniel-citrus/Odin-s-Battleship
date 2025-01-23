@@ -76,8 +76,8 @@ function attack(x, y) {
             display.gameover(`Player ${currentPlayer + 1}`);
         }
     }
-    // player missed or hit an invalid tile
-    else {
+    // player missed
+    else if (status === false) {
         refreshBoards();
 
         if (gamemode === 'computer') {
@@ -107,7 +107,7 @@ async function computerAttack(computer, opponent) {
     display.toggleHitBoard(true);
 
     while (status) {
-        await delay(randomNumber(500, 1150));
+        /* await delay(randomNumber(500, 1150)); */
         let { x, y } = computer.attack(opponent);
         status = opponent.board.attack(x, y);
         refreshBoards();

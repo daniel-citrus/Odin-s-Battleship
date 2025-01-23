@@ -214,6 +214,7 @@ class Gameboard {
                 y = this.#getRandomInt(this.board.length);
                 orientation = this.#randomOrientation();
             }
+            break;
         }
     }
 
