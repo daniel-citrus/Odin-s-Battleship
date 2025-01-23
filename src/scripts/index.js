@@ -67,19 +67,25 @@ function switchPlayers() {
 }
 
 function attack(x, y) {
-    const status = players[otherPlayer()].board.attack(x, y);
+    const current = players[currentPlayer];
+    const other = players[otherPlayer()];
+    const status = other.board.attack(x, y);
 
     if (status) {
-        if (players[otherPlayer()].board.allShipsDestroyed) {
+        if (other.board.allShipsDestroyed) {
             display.gameover(`Player ${currentPlayer + 1}`);
         }
     }
-    // player attacked and missed
-    else if (status === false) {
+    // player missed or hit an invalid tile
+    else {
         refreshBoards();
 
         if (gamemode === 'computer') {
-            computerAttack(players[otherPlayer()], players[currentPlayer]);
+            computerAttack(other, current);
+
+            if (current.board.allShipsDestroyed) {
+                display.gameover(`Player ${otherPlayer() + 1}`);
+            }
         } else {
             switchPlayers();
         }
@@ -105,8 +111,6 @@ async function computerAttack(computer, opponent) {
         let { x, y } = computer.attack(opponent);
         status = opponent.board.attack(x, y);
         refreshBoards();
-
-        // if computer won, gameover
     }
 
     display.toggleHitBoard(false);
