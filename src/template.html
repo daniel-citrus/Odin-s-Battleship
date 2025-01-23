@@ -6,7 +6,7 @@
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body>
-        <form class="startMenu">
+        <form class="startMenu hidden">
             <fieldset class="mode">
                 <input
                     type="radio"
@@ -55,6 +55,14 @@
                 <button>Hit All Ships (Opponent)</button>
             </div>
         </div>
-        <div class="gameover hidden"></div>
+        <div class="gameover">
+            <div class="message">
+                The battle is over. <span id="winner">Player</span> has won.
+            </div>
+            <div class="buttons">
+                <button type="button">Restart</button>
+                <button type="button">Exit</button>
+            </div>
+        </div>
     </body>
 </html>

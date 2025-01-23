@@ -4,29 +4,28 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Project</title>
-        <script defer src="bundle.js"></script>
-    </head>
+    <script defer src="bundle.js"></script></head>
     <body>
-        <form class="startMenu">
+        <form class="startMenu hidden">
             <fieldset class="mode">
-                <input
-                    type="radio"
-                    name="gamemode"
-                    id="computer"
-                    value="computer"
-                    checked
-                />
-                <label for="computer">Computer</label>
                 <input
                     type="radio"
                     name="gamemode"
                     id="player"
                     value="player"
+                    checked
                 />
                 <label for="player">Player</label>
+                <input
+                    type="radio"
+                    name="gamemode"
+                    id="computer"
+                    value="computer"
+                />
+                <label for="computer">Computer</label>
             </fieldset>
 
-            <fieldset class="difficulty">
+            <fieldset class="difficulty hidden">
                 <input
                     type="radio"
                     name="difficulty"
@@ -56,6 +55,14 @@
                 <button>Hit All Ships (Opponent)</button>
             </div>
         </div>
-        <div class="gameover hidden"></div>
+        <div class="gameover">
+            <div class="message">
+                The battle is over. <span id="winner">Player</span> has won.
+            </div>
+            <div class="buttons">
+                <button type="button">Restart</button>
+                <button type="button">Exit</button>
+            </div>
+        </div>
     </body>
 </html>

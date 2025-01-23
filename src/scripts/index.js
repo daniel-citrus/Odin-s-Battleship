@@ -38,7 +38,7 @@ function startGame(mode, diff) {
     players = [player, opponent];
     gamemode = mode;
     difficulty = diff;
-    
+
     player.board.randomizeBoard();
     opponent.board.randomizeBoard();
     refreshBoards();
@@ -52,6 +52,9 @@ function startGame(mode, diff) {
 function gameover(player) {
     console.log(player + 1);
     display.toggleHitBoard(true);
+    // open winner pop up
+    // restart button, restart the game using the same settings
+    // exit, go back to start menu clear boards
 }
 
 function otherPlayer() {
