@@ -2,6 +2,7 @@ const boards = document.querySelector('.boards');
 const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
+const placementBoard = document.getElementById('placement');
 
 const startMenu = document.querySelector('form.startMenu');
 const gamemodes = startMenu.querySelectorAll('.mode input');
@@ -16,7 +17,7 @@ const exitButton = gameoverPopUp.querySelector('button.exit');
 import * as brain from './index';
 
 /* Development */
-const currentLose = document.querySelector('#current+button');
+/* const currentLose = document.querySelector('#current+button');
 const otherLose = document.querySelector('#opponent+button');
 
 currentLose.addEventListener('click', () => {
@@ -24,7 +25,7 @@ currentLose.addEventListener('click', () => {
 });
 otherLose.addEventListener('click', () => {
     brain.otherLose();
-});
+}); */
 /*  */
 
 gamemodes.forEach((mode) => {
@@ -83,7 +84,7 @@ export function buildBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, false, cellStatus(coords));
+            const cell = buildCell(row, col, 'display', cellStatus(coords));
             cell.dataset.ship = coords.ship.name;
             playerBoard.appendChild(cell);
         }
@@ -96,8 +97,20 @@ export function buildHitBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, true, cellStatus(coords));
+            const cell = buildCell(row, col, 'hit', cellStatus(coords));
             hitBoard.appendChild(cell);
+        }
+    }
+}
+
+export function buildPlacementBoard(boardArray) {
+    placementBoard.textContent = '';
+
+    for (let row in boardArray) {
+        for (let col in boardArray[row]) {
+            const coords = boardArray[row][col];
+            const cell = buildCell(row, col, 'placement', cellStatus(coords));
+            placementBoard.appendChild(cell);
         }
     }
 }
@@ -119,7 +132,15 @@ function cellStatus(coords) {
     }
 }
 
-function buildCell(x, y, attackable = false, status = 'unhit') {
+/**
+ *
+ * @param {*} x
+ * @param {*} y
+ * @param {*} type [display, hit, placement]
+ * @param {*} status
+ * @returns
+ */
+function buildCell(x, y, type, status = 'unhit') {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
@@ -127,13 +148,22 @@ function buildCell(x, y, attackable = false, status = 'unhit') {
     cell.dataset.y = y;
     cell.dataset.status = status;
 
-    if (attackable) {
+    if (type === 'hit') {
         cell.addEventListener('click', () => {
             attackCell(x, y);
+        });
+    } else if (type === 'placement') {
+        cell.addEventListener('click', () => {
+            placementCell(x, y, type);
         });
     }
 
     return cell;
+}
+
+// Cell to place new ships
+function placementCell() {
+    console.log('place ship');
 }
 
 export function attackCell(x, y) {

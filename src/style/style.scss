@@ -11,25 +11,26 @@ body {
     gap: 20px;
 }
 .board {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 5px;
+    height: 200px;
+    width: 200px;
 
-    #current,
-    #opponent {
-        height: 200px;
-        width: 200px;
+    display: grid;
+    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    
+    &.disabled {
+        pointer-events: none;
+        background: black;
+    }
 
-        display: grid;
-        grid-template: repeat(10, 1fr) / repeat(10, 1fr);
-
+    &#current,
+    &#opponent {
         &.disabled {
             pointer-events: none;
             background: black;
         }
     }
 
-    #opponent {
+    &#placement {
         .cell[data-status='unhit'] {
             cursor: pointer;
         }

@@ -2,8 +2,6 @@ import '../style/style.scss';
 import * as display from './display';
 import { Computer, Player } from './player';
 
-export { attack, currentLose, otherLose, startGame };
-
 let currentPlayer = 0; // 0 = Player, 1 = Opponent
 let gamemode; // computer or player
 let player;
@@ -15,6 +13,7 @@ startGame('computer', 'random');
 display.startGame();
 
 /* Development */
+display.buildPlacementBoard(opponent.board.board);
 
 function addShip(shipLength, orientation) {
     const cells = document.querySelectorAll('.cell');
@@ -35,20 +34,21 @@ addShip();
 
 /*  */
 
-function currentLose() {
+/* export function currentLose() {
     const p = players[currentPlayer];
     p.board.hitAllCells();
     refreshBoards();
 
     gameover(currentPlayer);
 }
-function otherLose() {
+
+export function otherLose() {
     const p = players[otherPlayer()];
     p.board.hitAllCells();
     refreshBoards();
 
     gameover(otherPlayer());
-}
+} */
 
 function refreshBoards() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
@@ -89,7 +89,7 @@ function switchPlayers() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
-function attack(x, y) {
+export function attack(x, y) {
     const current = players[currentPlayer];
     const other = players[otherPlayer()];
     const status = other.board.attack(x, y);
