@@ -25,14 +25,6 @@ currentLose.addEventListener('click', () => {
 otherLose.addEventListener('click', () => {
     brain.otherLose();
 });
-
-const cells = document.querySelectorAll('.cell');
-cells.forEach((cell) => {
-    console.log('hi');
-    cell.addEventListener('mouseover', () => {
-        console.log('over');
-    });
-});
 /*  */
 
 gamemodes.forEach((mode) => {

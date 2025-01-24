@@ -29,8 +29,14 @@ body {
         }
     }
 
-    #opponent .cell[data-status='unhit'] {
-        cursor: pointer;
+    #opponent {
+        .cell[data-status='unhit'] {
+            cursor: pointer;
+        }
+
+        .cell.placeShip {
+            background: rgb(255, 231, 18);
+        }
     }
 
     div {

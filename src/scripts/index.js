@@ -14,6 +14,27 @@ let difficulty;
 startGame('computer', 'random');
 display.startGame();
 
+/* Development */
+
+function addShip(shipLength, orientation) {
+    const cells = document.querySelectorAll('.cell');
+
+    cells.forEach((cell) => {
+        cell.addEventListener('mouseover', () => {
+            cell.classList.add('placeShip');
+            console.log(cell.dataset.x, cell.dataset.y);
+        });
+
+        cell.addEventListener('mouseout', () => {
+            cell.classList.remove('placeShip');
+        });
+    });
+}
+
+addShip();
+
+/*  */
+
 function currentLose() {
     const p = players[currentPlayer];
     p.board.hitAllCells();
