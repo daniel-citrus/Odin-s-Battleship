@@ -56,7 +56,7 @@ function refreshBoards() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
-function startGame(mode, diff) {
+export function startGame(mode, diff) {
     player = new Player();
     opponent = new Computer(diff);
     players = [player, opponent];
