@@ -16,7 +16,7 @@ body {
 
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
-    
+
     &.disabled {
         pointer-events: none;
         background: black;
@@ -37,6 +37,10 @@ body {
 
         .cell.placeShip {
             background: rgb(255, 231, 18);
+        }
+
+        .cell.highlight {
+            background: green;
         }
     }
 

@@ -84,7 +84,7 @@ export function buildBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, 'display', cellStatus(coords));
+            const cell = buildCell(row, col, cellStatus(coords));
             cell.dataset.ship = coords.ship.name;
             playerBoard.appendChild(cell);
         }
@@ -97,22 +97,70 @@ export function buildHitBoard(boardArray) {
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, 'hit', cellStatus(coords));
+            const cell = buildCell(row, col, cellStatus(coords));
+
+            cell.addEventListener('click', () => {
+                attackCell(x, y);
+            });
+
             hitBoard.appendChild(cell);
         }
     }
 }
 
-export function buildPlacementBoard(boardArray) {
+export function buildPlacementBoard(boardArray, highlightLength = 1) {
     placementBoard.textContent = '';
+    placementBoard.dataset.highlightLength = highlightLength;
 
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
-            const cell = buildCell(row, col, 'placement', cellStatus(coords));
+            const cell = buildCell(row, col, cellStatus(coords));
+            const [x, y] = [cell.dataset.x, cell.dataset.y];
+
+            cell.addEventListener('mouseover', () => {
+                cell.classList.add('placeShip');
+                highlightShip(x, y, highlightLength, 'vertical');
+            });
+
+            cell.addEventListener('mouseout', () => {
+                cell.classList.remove('placeShip');
+            });
+
+            cell.addEventListener('click', () => {
+                // place ship
+            });
+
             placementBoard.appendChild(cell);
         }
     }
+}
+
+/**
+ * Using the starting coordinates, highlight cells occupied by ship.
+ * @param {*} x
+ * @param {*} y
+ * @param {*} length
+ */
+function highlightShip(x, y, length, orientation = 'vertical') {
+    for (let i = 0; i < length; i++) {
+        if (orientation === 'vertical') {
+            x = +x + 1;
+        } else {
+            y = +y + 1;
+        }
+
+        const cell = placementBoard.querySelector(
+            `[data-x="${x}"][data-y="${y}"]`
+        );
+
+        console.log(cell);
+        cell.classList.add('highlight');
+    }
+}
+
+function unhighlightShip(x, y, length, orientation = 'vertical') {
+    for (let i = 0; i < length; i++) {}
 }
 
 /**
@@ -140,23 +188,13 @@ function cellStatus(coords) {
  * @param {*} status
  * @returns
  */
-function buildCell(x, y, type, status = 'unhit') {
+function buildCell(x, y, status = 'unhit') {
     const cell = document.createElement('div');
 
     cell.classList.add('cell');
     cell.dataset.x = x;
     cell.dataset.y = y;
     cell.dataset.status = status;
-
-    if (type === 'hit') {
-        cell.addEventListener('click', () => {
-            attackCell(x, y);
-        });
-    } else if (type === 'placement') {
-        cell.addEventListener('click', () => {
-            placementCell(x, y, type);
-        });
-    }
 
     return cell;
 }

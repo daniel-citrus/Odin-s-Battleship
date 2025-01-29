@@ -13,24 +13,14 @@ startGame('computer', 'random');
 display.startGame();
 
 /* Development */
-display.buildPlacementBoard(opponent.board.board);
+display.buildPlacementBoard(opponent.board.board, 3);
 
-function addShip(shipLength, orientation) {
-    const cells = document.querySelectorAll('.cell');
-
-    cells.forEach((cell) => {
-        cell.addEventListener('mouseover', () => {
-            cell.classList.add('placeShip');
-            console.log(cell.dataset.x, cell.dataset.y);
-        });
-
-        cell.addEventListener('mouseout', () => {
-            cell.classList.remove('placeShip');
-        });
-    });
+export function addShip(player) {
+    // get all ship types from player board
+    // store all in an array
+    // for each ship loop through
+    // update placement board
 }
-
-addShip();
 
 /*  */
 

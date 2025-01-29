@@ -7,7 +7,7 @@ class Gameboard {
     }
 
     // 5 types of ships, each type denoted by map key
-    #shipTypes = new Map([
+    shipTypes = new Map([
         [
             0,
             {
@@ -80,7 +80,7 @@ class Gameboard {
      * @param {boolean} direction vertical or horizontal placement
      */
     addShip(x, y, type, direction) {
-        const shipType = this.#shipTypes.get(type);
+        const shipType = this.shipTypes.get(type);
 
         if (!shipType) {
             return false;
@@ -204,7 +204,7 @@ class Gameboard {
     }
 
     randomizeBoard() {
-        for (const [id, ship] of this.#shipTypes) {
+        for (const [id, ship] of this.shipTypes) {
             let x = this.#getRandomInt(this.board.length);
             let y = this.#getRandomInt(this.board.length);
             let orientation = this.#randomOrientation();
