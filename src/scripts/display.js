@@ -96,21 +96,37 @@ export function buildHitBoard(boardArray) {
     }
 }
 
-export function buildPlacementBoard(boardArray, highlightLength = 1) {
+export function buildPlacementBoard(boardArray, length) {
     placementBoard.textContent = '';
-    placementBoard.dataset.highlightLength = highlightLength;
+    placementBoard.dataset.length = 0;
 
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
             const cell = buildCell(row, col, cellStatus(coords));
 
+            if (coords.ship) {
+                cell.dataset.ship = coords.ship.name;
+            }
+
             cell.addEventListener('mouseover', () => {
-                highlightShip(row, col, highlightLength, 'vertical');
+                highlightShip({
+                    row,
+                    col,
+                    length: 2,
+                    orientation: 'vertical',
+                    highlight: true,
+                });
             });
 
             cell.addEventListener('mouseout', () => {
-                unhighlightShip(row, col, highlightLength, 'vertical');
+                highlightShip({
+                    row,
+                    col,
+                    length: 2,
+                    orientation: 'vertical',
+                    highlight: false,
+                });
             });
 
             cell.addEventListener('click', () => {
@@ -122,33 +138,33 @@ export function buildPlacementBoard(boardArray, highlightLength = 1) {
     }
 }
 
-function buildPlacementCell() {}
-
 /**
  * Using the starting coordinates, highlight cells occupied by ship.
  * @param {*} x
  * @param {*} y
  * @param {*} length
  */
-function highlightShip(x, y, length, orientation = 'vertical') {
+function highlightShip({ row, col, length, orientation, highlight }) {
     for (let i = 0; i < length; i++) {
         let query;
 
         if (orientation === 'vertical') {
-            query = `[data-x="${+x + i * 1}"][data-y="${y}"]`;
+            query = `[data-x="${+row + i * 1}"][data-y="${col}"]`;
         } else {
-            query = `[data-x="${x}"][data-y="${+y + i * 1}"]`;
+            query = `[data-x="${row}"][data-y="${+col + i * 1}"]`;
         }
 
-        const cell = placementBoard.querySelector(query);
-
-        console.log(cell);
-        cell.classList.add('highlight');
+        try {
+            const cell = placementBoard.querySelector(query);
+            if (highlight) {
+                cell.classList.add('highlight');
+            } else {
+                cell.classList.remove('highlight');
+            }
+        } catch (error) {
+            console.error('Cell is out of bounds.');
+        }
     }
-}
-
-function unhighlightShip(x, y, length, orientation = 'vertical') {
-    for (let i = 0; i < length; i++) {}
 }
 
 /**
@@ -196,12 +212,12 @@ export function attackCell(x, y) {
     const result = brain.attack(x, y);
 
     /* if (result === false) {
-        console.log('miss');
-    } else if (result === null) {
-        console.log('already hit');
-    } else {
-        console.log('hit');
-    } */
+            console.log('miss');
+        } else if (result === null) {
+            console.log('already hit');
+        } else {
+            console.log('hit');
+        } */
 
     if (!result) {
         return;

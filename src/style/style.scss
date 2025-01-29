@@ -36,7 +36,16 @@ body {
         }
 
         .cell.highlight {
-            background: green;
+            background: grey;
+
+            /* Invalid */
+            &[data-ship='Battleship'],
+            &[data-ship='Submarine'],
+            &[data-ship='Destroyer'],
+            &[data-ship='Cruiser'],
+            &[data-ship='Carrier'] {
+                background: red;
+            }
         }
     }
 

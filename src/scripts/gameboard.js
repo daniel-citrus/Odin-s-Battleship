@@ -89,7 +89,7 @@ class Gameboard {
         const length = shipType.length;
         const name = shipType.name;
 
-        if (!this.#shipFits(x, y, length, direction)) {
+        if (!this.shipFits(x, y, length, direction)) {
             return false;
         }
 
@@ -106,9 +106,9 @@ class Gameboard {
         return true;
     }
 
-    #shipFits(x, y, length, direction) {
+    shipFits(x, y, length, direction) {
         const maxCoord = this.board.length - 1;
-        // depending on the direction, check if ship will go over the boundary
+
         if (direction === 'vertical') {
             const endX = x + length - 1;
 
