@@ -16,18 +16,6 @@ const exitButton = gameoverPopUp.querySelector('button.exit');
 
 import * as brain from './index';
 
-/* Development */
-/* const currentLose = document.querySelector('#current+button');
-const otherLose = document.querySelector('#opponent+button');
-
-currentLose.addEventListener('click', () => {
-    brain.currentLose();
-});
-otherLose.addEventListener('click', () => {
-    brain.otherLose();
-}); */
-/*  */
-
 gamemodes.forEach((mode) => {
     mode.addEventListener('click', () => {
         if (mode.value === 'player') {
@@ -116,15 +104,13 @@ export function buildPlacementBoard(boardArray, highlightLength = 1) {
         for (let col in boardArray[row]) {
             const coords = boardArray[row][col];
             const cell = buildCell(row, col, cellStatus(coords));
-            const [x, y] = [cell.dataset.x, cell.dataset.y];
 
             cell.addEventListener('mouseover', () => {
-                cell.classList.add('placeShip');
-                highlightShip(x, y, highlightLength, 'vertical');
+                highlightShip(row, col, highlightLength, 'vertical');
             });
 
             cell.addEventListener('mouseout', () => {
-                cell.classList.remove('placeShip');
+                unhighlightShip(row, col, highlightLength, 'vertical');
             });
 
             cell.addEventListener('click', () => {
@@ -136,6 +122,8 @@ export function buildPlacementBoard(boardArray, highlightLength = 1) {
     }
 }
 
+function buildPlacementCell() {}
+
 /**
  * Using the starting coordinates, highlight cells occupied by ship.
  * @param {*} x
@@ -144,15 +132,15 @@ export function buildPlacementBoard(boardArray, highlightLength = 1) {
  */
 function highlightShip(x, y, length, orientation = 'vertical') {
     for (let i = 0; i < length; i++) {
+        let query;
+
         if (orientation === 'vertical') {
-            x = +x + 1;
+            query = `[data-x="${+x + i * 1}"][data-y="${y}"]`;
         } else {
-            y = +y + 1;
+            query = `[data-x="${x}"][data-y="${+y + i * 1}"]`;
         }
 
-        const cell = placementBoard.querySelector(
-            `[data-x="${x}"][data-y="${y}"]`
-        );
+        const cell = placementBoard.querySelector(query);
 
         console.log(cell);
         cell.classList.add('highlight');

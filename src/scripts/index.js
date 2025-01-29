@@ -24,22 +24,6 @@ export function addShip(player) {
 
 /*  */
 
-/* export function currentLose() {
-    const p = players[currentPlayer];
-    p.board.hitAllCells();
-    refreshBoards();
-
-    gameover(currentPlayer);
-}
-
-export function otherLose() {
-    const p = players[otherPlayer()];
-    p.board.hitAllCells();
-    refreshBoards();
-
-    gameover(otherPlayer());
-} */
-
 function refreshBoards() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
     display.buildBoard(players[currentPlayer].board.board);
