@@ -13,20 +13,25 @@ startGame('computer', 'random');
 display.startGame();
 
 /* Development */
-display.buildPlacementBoard(opponent.board.board, 3);
-addShip(player);
-
+placeShips(player);
 /**
- *
+ * Place ships on placement board
  * @param {*} player
  */
-export function addShip(player) {
-    // get all ship types from player board
-    const ships = player.board.shipTypes;
-    ships.forEach((val, key) => {});
-    // store all in an array
-    // for each ship loop through
-    // update placement board
+export function placeShips(player) {
+    const shipTypes = player.board.shipTypes;
+
+    const ships = [];
+
+    for (let { length, name } of shipTypes.values()) {
+        ships.push({ length, name });
+    }
+
+    display.buildPlacementBoard(player.board.board, ships);
+}
+
+export function addShip() {
+    
 }
 
 /*  */

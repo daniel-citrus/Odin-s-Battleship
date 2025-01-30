@@ -96,7 +96,67 @@ export function buildHitBoard(boardArray) {
     }
 }
 
-export function buildPlacementBoard(boardArray, length) {
+/**
+ * Build a placement board that will allow the player to add each ship one-by-one to their board.
+ * @param {object} boardArray - 2D array representing player board
+ * @param {object} ships - array of ship objects {name, length}
+ */
+export function buildPlacementBoard(boardArray, ships) {
+    placementBoard.textContent = '';
+
+    for (let row in boardArray) {
+        for (let col in boardArray[row]) {
+            const coords = boardArray[row][col];
+            const cell = buildCell(row, col);
+
+            if (coords.ship) {
+                cell.dataset.ship = coords.ship.name;
+            }
+
+            cell.addEventListener('mouseover', () => {
+                highlightShip({
+                    row,
+                    col,
+                    length: 2,
+                    orientation: 'vertical',
+                    highlight: true,
+                });
+            });
+
+            cell.addEventListener('mouseout', () => {
+                highlightShip({
+                    row,
+                    col,
+                    length: 2,
+                    orientation: 'vertical',
+                    highlight: false,
+                });
+            });
+
+            cell.addEventListener('click', () => {
+                // call brain and add ship
+                // if fail, do nothing
+                // if success, pop the ships array
+                //  if the array is empty proceed to the next phase (prompt screen, switch to next player)
+                //  if the array is not empty, call buildplacementboard again
+            });
+
+            placementBoard.appendChild(cell);
+        }
+    }
+
+    // for each cell
+    //  give it hover effects
+    //  when clicked
+    //      call brain and try to place the ship
+    //      if it fails, do nothing
+    //      if it's successful, pop the array
+    //      check if the array is empty
+    //      if the array is empty proceed to the next phase (prompt screen, switch to next player)
+    //      if the array is not empty, call buildplacementboard again
+}
+
+/* export function buildPlacementBoard(boardArray, length) {
     placementBoard.textContent = '';
     placementBoard.dataset.length = 0;
 
@@ -136,7 +196,7 @@ export function buildPlacementBoard(boardArray, length) {
             placementBoard.appendChild(cell);
         }
     }
-}
+} */
 
 /**
  * Using the starting coordinates, highlight cells occupied by ship.
@@ -189,7 +249,7 @@ function cellStatus(coords) {
  * @param {*} x
  * @param {*} y
  * @param {*} type [display, hit, placement]
- * @param {*} status
+ * @param {*} status [optional]
  * @returns
  */
 function buildCell(x, y, status = 'unhit') {
