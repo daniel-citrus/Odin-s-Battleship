@@ -98,11 +98,12 @@ export function buildHitBoard(boardArray) {
 
 /**
  * Build a placement board that will allow the player to add each ship one-by-one to their board.
- * @param {object} boardArray - 2D array representing player board
- * @param {object} ships - array of ship objects {name, length}
+ * @param {object} boardArray - 2D array representing player board, used to display existing ships
+ * @param {object} ships - array of ship objects [{type_id, name, length},...]
  */
 export function buildPlacementBoard(boardArray, ships) {
     placementBoard.textContent = '';
+    const ship = ships[0];
 
     for (let row in boardArray) {
         for (let col in boardArray[row]) {
@@ -117,8 +118,8 @@ export function buildPlacementBoard(boardArray, ships) {
                 highlightShip({
                     row,
                     col,
-                    length: 2,
-                    orientation: 'vertical',
+                    length: ship.length,
+                    vertical: true,
                     highlight: true,
                 });
             });
@@ -127,16 +128,17 @@ export function buildPlacementBoard(boardArray, ships) {
                 highlightShip({
                     row,
                     col,
-                    length: 2,
-                    orientation: 'vertical',
+                    length: ship.length,
+                    vertical: true,
                     highlight: false,
                 });
             });
 
             cell.addEventListener('click', () => {
                 // call brain and add ship
+                brain.addShip(+row, +col, ship.id, true);
                 // if fail, do nothing
-                // if success, pop the ships array
+                // if success, pop the "ships" array
                 //  if the array is empty proceed to the next phase (prompt screen, switch to next player)
                 //  if the array is not empty, call buildplacementboard again
             });
@@ -144,59 +146,7 @@ export function buildPlacementBoard(boardArray, ships) {
             placementBoard.appendChild(cell);
         }
     }
-
-    // for each cell
-    //  give it hover effects
-    //  when clicked
-    //      call brain and try to place the ship
-    //      if it fails, do nothing
-    //      if it's successful, pop the array
-    //      check if the array is empty
-    //      if the array is empty proceed to the next phase (prompt screen, switch to next player)
-    //      if the array is not empty, call buildplacementboard again
 }
-
-/* export function buildPlacementBoard(boardArray, length) {
-    placementBoard.textContent = '';
-    placementBoard.dataset.length = 0;
-
-    for (let row in boardArray) {
-        for (let col in boardArray[row]) {
-            const coords = boardArray[row][col];
-            const cell = buildCell(row, col, cellStatus(coords));
-
-            if (coords.ship) {
-                cell.dataset.ship = coords.ship.name;
-            }
-
-            cell.addEventListener('mouseover', () => {
-                highlightShip({
-                    row,
-                    col,
-                    length: 2,
-                    orientation: 'vertical',
-                    highlight: true,
-                });
-            });
-
-            cell.addEventListener('mouseout', () => {
-                highlightShip({
-                    row,
-                    col,
-                    length: 2,
-                    orientation: 'vertical',
-                    highlight: false,
-                });
-            });
-
-            cell.addEventListener('click', () => {
-                // place ship
-            });
-
-            placementBoard.appendChild(cell);
-        }
-    }
-} */
 
 /**
  * Using the starting coordinates, highlight cells occupied by ship.
@@ -204,11 +154,11 @@ export function buildPlacementBoard(boardArray, ships) {
  * @param {*} y
  * @param {*} length
  */
-function highlightShip({ row, col, length, orientation, highlight }) {
+function highlightShip({ row, col, length, vertical, highlight }) {
     for (let i = 0; i < length; i++) {
         let query;
 
-        if (orientation === 'vertical') {
+        if (vertical) {
             query = `[data-x="${+row + i * 1}"][data-y="${col}"]`;
         } else {
             query = `[data-x="${row}"][data-y="${+col + i * 1}"]`;
@@ -222,7 +172,7 @@ function highlightShip({ row, col, length, orientation, highlight }) {
                 cell.classList.remove('highlight');
             }
         } catch (error) {
-            console.error('Cell is out of bounds.');
+            /* console.error('Cell is out of bounds.'); */
         }
     }
 }

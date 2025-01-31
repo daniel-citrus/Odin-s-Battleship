@@ -76,11 +76,11 @@ class Gameboard {
      * Add ship to board if it fits on the given coordinates
      * @param {number} x board x coordinate
      * @param {number} y board y coordinate
-     * @param {number} type ship type by number
-     * @param {boolean} direction vertical or horizontal placement
+     * @param {number} type_id ship type by number
+     * @param {boolean} vertical vertical or horizontal placement
      */
-    addShip(x, y, type, direction) {
-        const shipType = this.shipTypes.get(type);
+    addShip(x, y, type_id, vertical) {
+        const shipType = this.shipTypes.get(type_id);
 
         if (!shipType) {
             return false;
@@ -89,16 +89,16 @@ class Gameboard {
         const length = shipType.length;
         const name = shipType.name;
 
-        if (!this.shipFits(x, y, length, direction)) {
+        if (!this.shipFits(x, y, length, vertical)) {
             return false;
         }
 
         const ship = new Ship(name, length);
 
         for (let i = 0; i < length; i++) {
-            if (direction === 'vertical') {
+            if (vertical) {
                 this.board[x + i][y].ship = ship;
-            } else if (direction === 'horizontal') {
+            } else {
                 this.board[x][y + i].ship = ship;
             }
         }
@@ -106,16 +106,14 @@ class Gameboard {
         return true;
     }
 
-    shipFits(x, y, length, direction) {
+    shipFits(x, y, length, vertical) {
         const maxCoord = this.board.length - 1;
-
-        if (direction === 'vertical') {
+        if (vertical) {
             const endX = x + length - 1;
-
             if (endX > maxCoord) {
                 return false;
             }
-        } else if (direction === 'horizontal') {
+        } else {
             const endY = y + length - 1;
 
             if (endY > maxCoord) {
@@ -124,12 +122,13 @@ class Gameboard {
         }
 
         for (let i = 0; i < length; i++) {
-            if (direction === 'vertical') {
+            if (vertical) {
                 if (this.board[x + i][y].ship) {
                     return false;
                 }
-            } else if (direction === 'horizontal') {
+            } else {
                 if (this.board[x][y + i].ship) {
+                    console.log(5);
                     return false;
                 }
             }

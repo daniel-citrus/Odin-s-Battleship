@@ -18,20 +18,22 @@ placeShips(player);
  * Place ships on placement board
  * @param {*} player
  */
-export function placeShips(player) {
-    const shipTypes = player.board.shipTypes;
-
+export function placeShips() {
+    const shipTypes = players[currentPlayer].board.shipTypes;
     const ships = [];
 
-    for (let { length, name } of shipTypes.values()) {
-        ships.push({ length, name });
+    for (let id of Array.from(shipTypes.keys())) {
+        const { length, name } = shipTypes.get(id);
+        ships.push({ id, length, name });
     }
 
-    display.buildPlacementBoard(player.board.board, ships);
+    display.buildPlacementBoard(players[currentPlayer].board.board, ships);
 }
 
-export function addShip() {
-    
+// add ship to current player
+export function addShip(x, y, id, vertical) {
+    const board = players[currentPlayer].board;
+    console.log(board.addShip(x, y, id, vertical));
 }
 
 /*  */
