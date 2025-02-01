@@ -34,6 +34,15 @@ exitButton.addEventListener('click', () => {
     exitGame();
 });
 
+startButton.addEventListener('click', () => {
+    const mode = startMenu.querySelector('.mode input:checked').value;
+    const diff = startMenu.querySelector('.difficulty input:checked').value;
+    localStorage.setItem('mode', mode);
+    localStorage.setItem('difficulty', diff);
+    startMenu.classList.add('hidden');
+    brain.initializeGame(mode, diff);
+});
+
 function exitGame() {
     gameoverPopUp.classList.add('hidden');
     startMenu.classList.remove('hidden');
@@ -50,18 +59,7 @@ function restartGame() {
     startGame();
 }
 
-startButton.addEventListener('click', () => {
-    const mode = startMenu.querySelector('.mode input:checked').value;
-    const diff = startMenu.querySelector('.difficulty input:checked').value;
-    localStorage.setItem('mode', mode);
-    localStorage.setItem('difficulty', diff);
-
-    brain.startGame(mode, diff);
-    startGame();
-});
-
 export function startGame() {
-    startMenu.classList.add('hidden');
     currentPlayer.classList.remove('hidden');
     boards.classList.remove('hidden');
 }
@@ -118,8 +116,8 @@ export function buildPlacementBoard(boardArray, ships) {
 
             // No more ships to add
             if (!ship) {
-                // build placement board for the next player
-                // maybe call brain for something?
+                brain.completePlacement();
+                return;
             }
 
             cell.addEventListener('mouseover', () => {
