@@ -89,7 +89,7 @@ class Gameboard {
         const length = shipType.length;
         const name = shipType.name;
 
-        if (!this.shipFits(x, y, length, vertical)) {
+        if (!this.#shipFits(x, y, length, vertical)) {
             return false;
         }
 
@@ -106,7 +106,7 @@ class Gameboard {
         return true;
     }
 
-    shipFits(x, y, length, vertical) {
+    #shipFits(x, y, length, vertical) {
         const maxCoord = this.board.length - 1;
         if (vertical) {
             const endX = x + length - 1;
@@ -128,7 +128,6 @@ class Gameboard {
                 }
             } else {
                 if (this.board[x][y + i].ship) {
-                    console.log(5);
                     return false;
                 }
             }

@@ -11,9 +11,20 @@ let difficulty;
 
 startGame('computer', 'random');
 display.startGame();
-
-/* Development */
 placeShips(player);
+
+export function placementComplete() {
+    // if game mode is computer, return
+
+    // if current player is 1, 
+    // switch players
+    // start the game
+    // return (2nd player has just been completed)
+
+    // switch players
+    // build placement board for current player
+}
+
 /**
  * Place ships on placement board
  * @param {*} player
@@ -30,13 +41,18 @@ export function placeShips() {
     display.buildPlacementBoard(players[currentPlayer].board.board, ships);
 }
 
-// add ship to current player
+/**
+ * Add ship to current player's board
+ * @param {number} x
+ * @param {number} y
+ * @param {number} id
+ * @param {boolean} vertical - ship orientation is vertical
+ * @returns {boolean} true if ship was added, false if not
+ */
 export function addShip(x, y, id, vertical) {
     const board = players[currentPlayer].board;
-    console.log(board.addShip(x, y, id, vertical));
+    return board.addShip(x, y, id, vertical);
 }
-
-/*  */
 
 function refreshBoards() {
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
@@ -51,8 +67,8 @@ export function startGame(mode, diff) {
     gamemode = mode;
     difficulty = diff;
 
-    player.board.randomizeBoard();
-    opponent.board.randomizeBoard();
+    /* player.board.randomizeBoard();
+    opponent.board.randomizeBoard(); */
     refreshBoards();
     display.toggleHitBoard(false);
 }
