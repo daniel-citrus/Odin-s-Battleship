@@ -16,6 +16,7 @@ let difficulty = 'random';
 export function completePlacement() {
     // if game mode is computer, return
     if (gamemode === 'computer') {
+        startGame(gamemode, difficulty);
         return;
     }
 
@@ -31,6 +32,7 @@ export function completePlacement() {
 
     // switch players
     currentPlayer = otherPlayer();
+    display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
     // build placement board for current player
     placeShips();
 }
@@ -75,17 +77,27 @@ export function initializeGame(mode, diff) {
     opponent = new Computer(diff);
     players = [player, opponent];
     gamemode = mode;
+
+    if (gamemode === 'computer') {
+        opponent.board.randomizeBoard();
+    }
+
     difficulty = diff;
     placeShips();
 }
 
+/* Restart the game with the same settings */
+export function restartGame() {
+    currentPlayer = 0;
+    player.board.clearShips();
+    opponent.board.clearShips();
+    placeShips();
+}
+
 export function startGame(mode, diff) {
-    /* player.board.randomizeBoard();
-    opponent.board.randomizeBoard(); */
-    display.buildBoard(player.board.board);
-    display.buildHitBoard(opponent.board.board);
     refreshBoards();
     display.toggleHitBoard(false);
+    display.startGame();
 }
 
 /**

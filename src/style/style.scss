@@ -30,6 +30,11 @@ body {
         }
     }
 
+    &#opponent {
+        .cell[data-status='unhit']:hover {
+            background: green;
+        }
+    }
     &#placement {
         .cell[data-status='unhit'] {
             cursor: pointer;

@@ -51,17 +51,23 @@ function exitGame() {
 }
 
 function restartGame() {
+    boards.classList.remove('hidden');
+    playerBoard.classList.add('hidden');
+    hitBoard.classList.add('hidden');
+    placementBoard.classList.remove('hidden');
     gameoverPopUp.classList.add('hidden');
-    brain.startGame(
+    brain.restartGame(
         localStorage.getItem('mode'),
         localStorage.getItem('difficulty')
     );
-    startGame();
 }
 
 export function startGame() {
     currentPlayer.classList.remove('hidden');
     boards.classList.remove('hidden');
+    playerBoard.classList.remove('hidden');
+    hitBoard.classList.remove('hidden');
+    placementBoard.classList.add('hidden');
 }
 
 export function buildBoard(boardArray) {
@@ -86,7 +92,7 @@ export function buildHitBoard(boardArray) {
             const cell = buildCell(row, col, cellStatus(coords));
 
             cell.addEventListener('click', () => {
-                attackCell(x, y);
+                attackCell(row, col);
             });
 
             hitBoard.appendChild(cell);
@@ -108,17 +114,18 @@ export function buildPlacementBoard(boardArray, ships) {
             const coords = boardArray[row][col];
             let cell = buildCell(row, col);
 
+            // if a ship already exists, insert it into the placement board
             if (coords.ship) {
                 cell.dataset.ship = coords.ship.name;
             }
-
-            placementBoard.appendChild(cell);
 
             // No more ships to add
             if (!ship) {
                 brain.completePlacement();
                 return;
             }
+
+            placementBoard.appendChild(cell);
 
             cell.addEventListener('mouseover', () => {
                 highlightShip(row, col, ship.length, true, true);
@@ -206,21 +213,18 @@ function buildCell(x, y, status = 'unhit') {
     return cell;
 }
 
-// Cell to place new ships
-function placementCell() {
-    console.log('place ship');
-}
-
 export function attackCell(x, y) {
     const result = brain.attack(x, y);
 
-    /* if (result === false) {
+    /*
+        if (result === false) {
             console.log('miss');
         } else if (result === null) {
             console.log('already hit');
         } else {
             console.log('hit');
-        } */
+        }
+    */
 
     if (!result) {
         return;
@@ -257,6 +261,7 @@ export function setCurrentPlayer(player) {
     currentPlayer.textContent = player;
 }
 
+/* Disable the hitboard to prevent clicks */
 export function toggleHitBoard(disable = false) {
     if (disable) {
         hitBoard.classList.add('disabled');

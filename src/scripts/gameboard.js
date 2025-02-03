@@ -3,6 +3,19 @@ import Ship from './ship';
 
 class Gameboard {
     constructor() {
+        /*
+        this.board will contain a 2D array. Each element will be a cell object:
+        {
+            ship: false
+            hit: null
+        }
+        
+        board.ship: ship object or false (if no ship is present)
+        board.hit:
+             true - cell hit
+            false - cell missed (no ship)
+             null - cell unhit
+        */
         this.board = this.#createBoard();
     }
 
@@ -192,11 +205,11 @@ class Gameboard {
         return this.board;
     }
 
-    // Hit all cells on the board
-    hitAllCells() {
+    // Unhit all cells on the board
+    unhitAllCells() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
-                this.board[row][col].hit = true;
+                this.board[row][col].hit = null;
             }
         }
     }
