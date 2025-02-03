@@ -14,8 +14,8 @@ let difficulty = 'random';
  * @returns
  */
 export function completePlacement() {
-    // if game mode is computer, return
     if (gamemode === 'computer') {
+        opponent.board.randomizeBoard();
         startGame(gamemode, difficulty);
         return;
     }
@@ -38,7 +38,7 @@ export function completePlacement() {
 }
 
 /**
- * Place ships on placement board
+ * Allow player to place ships on their board using the placement board
  * @param {number} player - 0 or 1
  */
 export function placeShips() {
@@ -51,6 +51,7 @@ export function placeShips() {
     }
 
     display.buildPlacementBoard(players[currentPlayer].board.board, ships);
+    display.placeShips();
 }
 
 /**
@@ -77,11 +78,6 @@ export function initializeGame(mode, diff) {
     opponent = new Computer(diff);
     players = [player, opponent];
     gamemode = mode;
-
-    if (gamemode === 'computer') {
-        opponent.board.randomizeBoard();
-    }
-
     difficulty = diff;
     placeShips();
 }
@@ -95,6 +91,7 @@ export function restartGame() {
 }
 
 export function startGame(mode, diff) {
+    currentPlayer = 0;
     refreshBoards();
     display.toggleHitBoard(false);
     display.startGame();
@@ -120,6 +117,12 @@ function switchPlayers() {
     display.buildHitBoard(players[otherPlayer()].board.board);
 }
 
+/**
+ *
+ * @param {*} x
+ * @param {*} y
+ * @returns true - cell hit, false - cell missed (no ship), null - already hit
+ */
 export function attack(x, y) {
     const current = players[currentPlayer];
     const other = players[otherPlayer()];
@@ -127,7 +130,7 @@ export function attack(x, y) {
 
     if (status) {
         if (other.board.allShipsDestroyed) {
-            display.gameover(`Player ${currentPlayer + 1}`);
+            gameover(currentPlayer);
         }
     }
     // player missed
@@ -138,7 +141,7 @@ export function attack(x, y) {
             computerAttack(other, current);
 
             if (current.board.allShipsDestroyed) {
-                display.gameover(`Player ${otherPlayer() + 1}`);
+                gameover(otherPlayer());
             }
         } else {
             switchPlayers();
@@ -161,7 +164,7 @@ async function computerAttack(computer, opponent) {
     display.toggleHitBoard(true);
 
     while (status) {
-        /* await delay(randomNumber(500, 1150)); */
+        await delay(randomNumber(500, 1150));
         let { x, y } = computer.attack(opponent);
         status = opponent.board.attack(x, y);
         refreshBoards();

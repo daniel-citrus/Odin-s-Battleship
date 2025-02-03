@@ -28,6 +28,10 @@ gamemodes.forEach((mode) => {
 
 restartButton.addEventListener('click', () => {
     restartGame();
+    brain.restartGame(
+        localStorage.getItem('mode'),
+        localStorage.getItem('difficulty')
+    );
 });
 
 exitButton.addEventListener('click', () => {
@@ -48,6 +52,10 @@ function exitGame() {
     startMenu.classList.remove('hidden');
     currentPlayer.classList.add('hidden');
     boards.classList.add('hidden');
+
+    boards.childNodes().forEach((node) => {
+        node.classList.add('hidden');
+    });
 }
 
 function restartGame() {
@@ -56,10 +64,6 @@ function restartGame() {
     hitBoard.classList.add('hidden');
     placementBoard.classList.remove('hidden');
     gameoverPopUp.classList.add('hidden');
-    brain.restartGame(
-        localStorage.getItem('mode'),
-        localStorage.getItem('difficulty')
-    );
 }
 
 export function startGame() {
@@ -68,6 +72,14 @@ export function startGame() {
     playerBoard.classList.remove('hidden');
     hitBoard.classList.remove('hidden');
     placementBoard.classList.add('hidden');
+}
+
+export function placeShips() {
+    currentPlayer.classList.remove('hidden');
+    boards.classList.remove('hidden');
+    playerBoard.classList.add('hidden');
+    hitBoard.classList.add('hidden');
+    placementBoard.classList.remove('hidden');
 }
 
 export function buildBoard(boardArray) {
@@ -216,16 +228,6 @@ function buildCell(x, y, status = 'unhit') {
 export function attackCell(x, y) {
     const result = brain.attack(x, y);
 
-    /*
-        if (result === false) {
-            console.log('miss');
-        } else if (result === null) {
-            console.log('already hit');
-        } else {
-            console.log('hit');
-        }
-    */
-
     if (!result) {
         return;
     }
@@ -235,7 +237,7 @@ export function attackCell(x, y) {
 }
 
 export function gameover(winner) {
-    boards.classList.add('hidden');
+    toggleHitBoard(true);
     gameoverPopUp.classList.remove('hidden');
     winnerText.textContent = winner;
 }

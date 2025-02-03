@@ -214,6 +214,9 @@ class Gameboard {
         }
     }
 
+    /**
+     * Randomly place one instance of each available ship type on the board.
+     */
     randomizeBoard() {
         for (const [id, ship] of this.shipTypes) {
             let x = this.#getRandomInt(this.board.length);
