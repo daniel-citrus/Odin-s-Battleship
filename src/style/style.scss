@@ -19,15 +19,7 @@ body {
 
     &.disabled {
         pointer-events: none;
-        background: black;
-    }
-
-    &#current,
-    &#opponent {
-        &.disabled {
-            pointer-events: none;
-            background: black;
-        }
+        filter: grayscale(80%) blur(1px);
     }
 
     &#opponent {
