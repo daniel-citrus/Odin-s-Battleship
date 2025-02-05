@@ -9,6 +9,10 @@ let opponent;
 let players;
 let difficulty = 'random';
 
+/*  */
+initializeGame('computer', 'random');
+/*  */
+
 /**
  * Starts the game if both players have placed their ships, otherwise, allow remaining player to place ships.
  * @returns
@@ -75,11 +79,13 @@ function refreshBoards() {
 
 export function initializeGame(mode, diff) {
     player = new Player();
+    player.board.randomizeBoard();
     opponent = new Computer(diff);
     players = [player, opponent];
     gamemode = mode;
     difficulty = diff;
-    placeShips();
+    /* placeShips(); */
+    startGame();
 }
 
 /* Restart the game with the same settings */
@@ -90,7 +96,7 @@ export function restartGame() {
     placeShips();
 }
 
-export function startGame(mode, diff) {
+export function startGame() {
     currentPlayer = 0;
     refreshBoards();
     display.toggleHitBoard(false);
@@ -118,9 +124,9 @@ function switchPlayers() {
 }
 
 /**
- *
- * @param {*} x
- * @param {*} y
+ * Attack the other player at cell {x, y}. Do nothing if attacking a cell that has already been hit.
+ * @param {integer} x
+ * @param {integer} y
  * @returns true - cell hit, false - cell missed (no ship), null - already hit
  */
 export function attack(x, y) {
@@ -128,6 +134,7 @@ export function attack(x, y) {
     const other = players[otherPlayer()];
     const status = other.board.attack(x, y);
 
+    // direct hit on a ship
     if (status) {
         if (other.board.allShipsDestroyed) {
             gameover(currentPlayer);
@@ -159,6 +166,11 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+/**
+ * Use a computer instance to attach opponent's board. Computer will continue to attach until it misses.
+ * @param {object} computer - Player object
+ * @param {object} opponent - Computer object
+ */
 async function computerAttack(computer, opponent) {
     let status = true;
     display.toggleHitBoard(true);
@@ -166,6 +178,7 @@ async function computerAttack(computer, opponent) {
     while (status) {
         await delay(randomNumber(500, 1150));
         let { x, y } = computer.attack(opponent);
+
         status = opponent.board.attack(x, y);
         refreshBoards();
     }

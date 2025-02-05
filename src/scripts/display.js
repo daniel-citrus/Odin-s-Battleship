@@ -16,6 +16,10 @@ const exitButton = gameoverPopUp.querySelector('button.exit');
 
 import * as brain from './index';
 
+/*  */
+startMenu.classList.add('hidden');
+/*  */
+
 gamemodes.forEach((mode) => {
     mode.addEventListener('click', () => {
         if (mode.value === 'player') {
@@ -28,10 +32,7 @@ gamemodes.forEach((mode) => {
 
 restartButton.addEventListener('click', () => {
     restartGame();
-    brain.restartGame(
-        localStorage.getItem('mode'),
-        localStorage.getItem('difficulty')
-    );
+    brain.restartGame();
 });
 
 exitButton.addEventListener('click', () => {
@@ -41,8 +42,6 @@ exitButton.addEventListener('click', () => {
 startButton.addEventListener('click', () => {
     const mode = startMenu.querySelector('.mode input:checked').value;
     const diff = startMenu.querySelector('.difficulty input:checked').value;
-    localStorage.setItem('mode', mode);
-    localStorage.setItem('difficulty', diff);
     startMenu.classList.add('hidden');
     brain.initializeGame(mode, diff);
 });
@@ -52,10 +51,8 @@ function exitGame() {
     startMenu.classList.remove('hidden');
     currentPlayer.classList.add('hidden');
     boards.classList.add('hidden');
-
-    boards.childNodes().forEach((node) => {
-        node.classList.add('hidden');
-    });
+    playerBoard.textContent = '';
+    hitBoard.textContent = '';
 }
 
 function restartGame() {

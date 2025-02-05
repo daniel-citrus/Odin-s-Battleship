@@ -1,4 +1,4 @@
-function randomAttack(opponent, diff) {
+function randomAttack(opponent) {
     const board = opponent.board.board;
     const dim = board.length;
     let x, y;
@@ -11,10 +11,14 @@ function randomAttack(opponent, diff) {
     return { x, y };
 }
 
-function smartAttack() {}
+function smartAttack(opponent) {
+    const board = opponent.board.board;
+    const dim = board.length;
+    let x, y;
+}
 
-export function attack(opponent, diff) {
-    if (diff === 'random') {
+export function attack(opponent, { difficulty, hits, misses }) {
+    if (difficulty === 'random') {
         return randomAttack(opponent);
     } else {
         return smartAttack(opponent);

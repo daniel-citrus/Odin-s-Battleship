@@ -19,7 +19,11 @@ class Computer extends Player {
     }
 
     attack(opponent) {
-        return bot.attack(opponent, this.difficulty);
+        return bot.attack(opponent, {
+            difficulty: this.difficulty,
+            hits: this.hits,
+            misses: this.misses,
+        });
     }
 }
 
