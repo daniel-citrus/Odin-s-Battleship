@@ -219,28 +219,21 @@ class Gameboard {
      */
     randomizeBoard() {
         for (const [id, ship] of this.shipTypes) {
-            let x = this.#getRandomInt(this.board.length);
-            let y = this.#getRandomInt(this.board.length);
-            let orientation = this.#randomOrientation();
+            const boardLength = this.board.length;
+            let x = this.#getRandomInt(boardLength);
+            let y = this.#getRandomInt(boardLength);
+            let vertical = this.#getRandomInt(2);
 
-            while (!this.addShip(x, y, id, orientation)) {
-                x = this.#getRandomInt(this.board.length);
-                y = this.#getRandomInt(this.board.length);
-                orientation = this.#randomOrientation();
+            while (!this.addShip(x, y, id, vertical)) {
+                x = this.#getRandomInt(boardLength);
+                y = this.#getRandomInt(boardLength);
+                vertical = this.#getRandomInt(2);
             }
         }
     }
 
     #getRandomInt(max) {
         return Math.floor(Math.random() * max);
-    }
-
-    #randomOrientation() {
-        if (this.#getRandomInt(2)) {
-            return 'horizontal';
-        }
-
-        return 'vertical';
     }
 }
 
