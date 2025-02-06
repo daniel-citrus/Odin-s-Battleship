@@ -74,10 +74,9 @@ class Gameboard {
     get allShipsDestroyed() {
         for (let row in this.board) {
             for (let col in this.board[row]) {
-                if (
-                    this.board[row][col].ship !== false &&
-                    !this.board[row][col].hit
-                ) {
+                const ship = this.board[row][col].ship;
+                const hit = this.board[row][col].hit;
+                if (ship !== false && !hit) {
                     return false;
                 }
             }
@@ -187,9 +186,9 @@ class Gameboard {
     #createBoard(size = 10) {
         const board = [];
 
-        for (let x = 0; x < size; x++) {
+        for (let y = 0; y < size; y++) {
             const row = [];
-            for (let y = 0; y < size; y++) {
+            for (let x = 0; x < size; x++) {
                 row.push({
                     ship: false,
                     hit: null,
