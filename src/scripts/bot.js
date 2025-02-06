@@ -22,33 +22,43 @@ function randomAttack(opponent) {
 function smartAttack(opponent) {
     const board = opponent.board.board;
     const dim = board.length;
-    let x, y;
 
     // scan each cell in board
-    for (let y in board) {
-        for (let x in board[y]) {
+    for (let x in board) {
+        for (let y in board[x]) {
             const cell = board[x][y];
             const hit = cell.hit;
             const ship = cell.ship;
-            let temp, tempHit;
 
-            // if a cell is hit and has a ship, check surrounding cells
-            if (!hit) {
+            if (!hit || !ship) {
                 continue;
             }
+            x = +x;
+            y = +y;
 
-            if (!ship) {
-                continue;
+            // check if x, y are within the dimensions of the game board
+            // check if cell is hit
+            let tempX, tempY;
+            // up
+            tempY = y - 1;
+            if (tempY >= 0 && board[x][tempY].hit === null) {
+                return { x, y: tempY };
             }
-
-            // up y - 1
-            temp = y - 1;
-            /* tempHit =  */
-            /* if (temp >= 0 && ) */
-            // down y + 1
-            // left x - 1
-            // right x + 1
-            // attack the first instance of an unhit cell
+            // down
+            tempY = y + 1;
+            if (tempY < dim && board[x][tempY].hit === null) {
+                return { x, y: tempY };
+            }
+            // left
+            tempX = x - 1;
+            if (tempX >= 0 && board[tempX][y].hit === null) {
+                return { x: tempX, y };
+            }
+            // righti
+            tempX = x + 1;
+            if (tempX < dim && board[tempX][y].hit === null) {
+                return { x: tempX, y };
+            }
         }
     }
 

@@ -187,9 +187,9 @@ class Gameboard {
     #createBoard(size = 10) {
         const board = [];
 
-        for (let x = 0; x < size; x++) {
+        for (let y = 0; y < size; y++) {
             const row = [];
-            for (let y = 0; y < size; y++) {
+            for (let x = 0; x < size; x++) {
                 row.push({
                     ship: false,
                     hit: null,
