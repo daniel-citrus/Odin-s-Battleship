@@ -12,18 +12,12 @@ class Player {
 class Computer extends Player {
     constructor(difficulty) {
         super();
-        this.hits = []; // coordinates of ship hits
-        this.misses = []; // coordinates of misses
         this.type = 'computer';
         this.difficulty = difficulty;
     }
 
     attack(opponent) {
-        return bot.attack(opponent, {
-            difficulty: this.difficulty,
-            hits: this.hits,
-            misses: this.misses,
-        });
+        return bot.attack(opponent, this.difficulty);
     }
 }
 

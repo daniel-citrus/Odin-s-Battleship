@@ -10,7 +10,7 @@ let players;
 let difficulty = 'random';
 
 /*  */
-initializeGame('computer', 'random');
+initializeGame('computer', 'clever');
 /*  */
 
 /**
@@ -145,6 +145,7 @@ export function attack(x, y) {
         refreshBoards();
 
         if (gamemode === 'computer') {
+            display.setCurrentPlayer('Computer');
             computerAttack(other, current);
 
             if (current.board.allShipsDestroyed) {
