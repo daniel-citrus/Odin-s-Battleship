@@ -16,10 +16,6 @@ const exitButton = gameoverPopUp.querySelector('button.exit');
 
 import * as brain from './index';
 
-/*  */
-startMenu.classList.add('hidden');
-/*  */
-
 gamemodes.forEach((mode) => {
     mode.addEventListener('click', () => {
         if (mode.value === 'player') {

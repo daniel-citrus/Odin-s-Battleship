@@ -9,10 +9,6 @@ let opponent;
 let players;
 let difficulty = 'random';
 
-/*  */
-initializeGame('computer', 'clever');
-/*  */
-
 /**
  * Starts the game if both players have placed their ships, otherwise, allow remaining player to place ships.
  * @returns
@@ -79,13 +75,11 @@ function refreshBoards() {
 
 export function initializeGame(mode, diff) {
     player = new Player();
-    player.board.randomizeBoard();
     opponent = new Computer(diff);
     players = [player, opponent];
     gamemode = mode;
     difficulty = diff;
-    /* placeShips(); */
-    startGame();
+    placeShips();
 }
 
 /* Restart the game with the same settings */
@@ -105,11 +99,11 @@ export function startGame() {
 
 /**
  * Declare player as the winner
- * @param {object} player
+ * @param {string} player
  */
 function gameover(player) {
     display.toggleHitBoard(true);
-    display.gameover(`Player ${player + 1}`);
+    display.gameover(player);
 }
 
 function otherPlayer() {
@@ -137,7 +131,7 @@ export function attack(x, y) {
     // direct hit on a ship
     if (status) {
         if (other.board.allShipsDestroyed) {
-            gameover(currentPlayer);
+            gameover(`Player ${currentPlayer + 1}`);
         }
     }
     // player missed
@@ -147,10 +141,6 @@ export function attack(x, y) {
         if (gamemode === 'computer') {
             display.setCurrentPlayer('Computer');
             computerAttack(other, current);
-
-            if (current.board.allShipsDestroyed) {
-                gameover(otherPlayer());
-            }
         } else {
             switchPlayers();
         }
@@ -177,11 +167,16 @@ async function computerAttack(computer, opponent) {
     display.toggleHitBoard(true);
 
     while (status) {
-        await delay(randomNumber(500, 1150));
+        await delay(randomNumber(500, 1100));
         let { x, y } = computer.attack(opponent);
 
         status = opponent.board.attack(x, y);
         refreshBoards();
+
+        if (opponent.board.allShipsDestroyed) {
+            gameover('Computer');
+            return;
+        }
     }
 
     display.toggleHitBoard(false);
