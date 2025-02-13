@@ -4,8 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Project</title>
-        <script defer src="bundle.js"></script>
-    </head>
+    <script defer src="bundle.js"></script></head>
     <body>
         <form class="startMenu">
             <fieldset class="mode">
@@ -54,7 +53,7 @@
                     class="board"
                     id="placement"
                     data-length="0"
-                    data-direction="horizontal"
+                    data-vertical="true"
                 ></div>
                 <button class="button" id="switchDir">Switch Direction</button>
             </div>
@@ -67,6 +66,12 @@
                 <button type="button" class="restart">Restart</button>
                 <button type="button" class="exit">Exit</button>
             </div>
+        </div>
+        <div class="playerSwitch hidden">
+            <p>Player <span class="currentPlayer">#</span>, look away!</p>
+            <button type="button">
+                Switch to Player <span class="otherPlayer">#</span>
+            </button>
         </div>
     </body>
 </html>
