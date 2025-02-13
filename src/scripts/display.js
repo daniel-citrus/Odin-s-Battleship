@@ -2,7 +2,9 @@ const boards = document.querySelector('.boards');
 const currentPlayer = document.querySelector('.currentPlayer');
 const playerBoard = document.getElementById('current');
 const hitBoard = document.getElementById('opponent');
+const placementWindow = document.getElementById('placeScreen');
 const placementBoard = document.getElementById('placement');
+const switchDirButton = document.getElementById('switchDir');
 
 const startMenu = document.querySelector('form.startMenu');
 const gamemodes = startMenu.querySelectorAll('.mode input');
@@ -42,6 +44,16 @@ startButton.addEventListener('click', () => {
     brain.initializeGame(mode, diff);
 });
 
+switchDirButton.addEventListener('click', () => {
+    const vertical = placementBoard.dataset.vertical;
+
+    if (vertical === 'true') {
+        placementBoard.dataset.vertical = 'false';
+    } else {
+        placementBoard.dataset.vertical = 'true';
+    }
+});
+
 function exitGame() {
     gameoverPopUp.classList.add('hidden');
     startMenu.classList.remove('hidden');
@@ -55,7 +67,7 @@ function restartGame() {
     boards.classList.remove('hidden');
     playerBoard.classList.add('hidden');
     hitBoard.classList.add('hidden');
-    placementBoard.classList.remove('hidden');
+    placementWindow.classList.remove('hidden');
     gameoverPopUp.classList.add('hidden');
 }
 
@@ -64,7 +76,7 @@ export function startGame() {
     boards.classList.remove('hidden');
     playerBoard.classList.remove('hidden');
     hitBoard.classList.remove('hidden');
-    placementBoard.classList.add('hidden');
+    placementWindow.classList.add('hidden');
 }
 
 export function placeShips() {
@@ -72,7 +84,7 @@ export function placeShips() {
     boards.classList.remove('hidden');
     playerBoard.classList.add('hidden');
     hitBoard.classList.add('hidden');
-    placementBoard.classList.remove('hidden');
+    placementWindow.classList.remove('hidden');
 }
 
 export function buildBoard(boardArray) {
@@ -133,15 +145,18 @@ export function buildPlacementBoard(boardArray, ships) {
             placementBoard.appendChild(cell);
 
             cell.addEventListener('mouseover', () => {
-                highlightShip(row, col, ship.length, true, true);
+                const vertical = placementBoard.dataset.vertical === 'true';
+                highlightShip(row, col, ship.length, vertical, true);
             });
 
             cell.addEventListener('mouseout', () => {
-                highlightShip(row, col, ship.length, true, false);
+                const vertical = placementBoard.dataset.vertical === 'true';
+                highlightShip(row, col, ship.length, vertical, false);
             });
 
             cell.addEventListener('click', () => {
-                if (!brain.addShip(+row, +col, ship.id, true)) {
+                const vertical = placementBoard.dataset.vertical === 'true';
+                if (!brain.addShip(+row, +col, ship.id, vertical)) {
                     return;
                 }
 
