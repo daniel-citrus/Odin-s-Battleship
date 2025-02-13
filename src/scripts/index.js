@@ -133,6 +133,7 @@ export function attack(x, y) {
     // direct hit on a ship
     if (status) {
         if (other.board.allShipsDestroyed) {
+            display.togglePlayerSwitch(true);
             gameover(`Player ${currentPlayer + 1}`);
         }
     }
