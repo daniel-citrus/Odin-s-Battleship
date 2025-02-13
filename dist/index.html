@@ -44,11 +44,19 @@
             </fieldset>
             <button type="button">Start Game</button>
         </form>
-        <div class="currentPlayer">Player 1</div>
+        <div class="currentPlayer hidden">Player 1</div>
         <div class="boards">
             <div class="board" id="current"></div>
             <div class="board" id="opponent"></div>
-            <div class="board" id="placement" data-length="0"></div>
+            <div class="hidden" id="placeScreen" data-length="0">
+                <div
+                    class="board"
+                    id="placement"
+                    data-length="0"
+                    data-direction="horizontal"
+                ></div>
+                <button class="button" id="switchDir">Switch Direction</button>
+            </div>
         </div>
         <div class="gameover hidden">
             <div class="message">
