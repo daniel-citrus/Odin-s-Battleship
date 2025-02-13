@@ -22,6 +22,7 @@ export function completePlacement() {
 
     // if current player is 1,
     if (currentPlayer === 1) {
+        display.togglePlayerSwitch(false, currentPlayer + 1, otherPlayer() + 1);
         // switch players
         currentPlayer = otherPlayer();
         // start the game
@@ -30,6 +31,7 @@ export function completePlacement() {
         return;
     }
 
+    display.togglePlayerSwitch(false, currentPlayer + 1, otherPlayer() + 1);
     // switch players
     currentPlayer = otherPlayer();
     display.setCurrentPlayer(`Player ${currentPlayer + 1}`);
@@ -131,6 +133,7 @@ export function attack(x, y) {
     // direct hit on a ship
     if (status) {
         if (other.board.allShipsDestroyed) {
+            display.togglePlayerSwitch(true);
             gameover(`Player ${currentPlayer + 1}`);
         }
     }
@@ -142,6 +145,11 @@ export function attack(x, y) {
             display.setCurrentPlayer('Computer');
             computerAttack(other, current);
         } else {
+            display.togglePlayerSwitch(
+                false,
+                currentPlayer + 1,
+                otherPlayer() + 1
+            );
             switchPlayers();
         }
     }

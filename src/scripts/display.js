@@ -6,6 +6,9 @@ const placementWindow = document.getElementById('placeScreen');
 const placementBoard = document.getElementById('placement');
 const switchDirButton = document.getElementById('switchDir');
 
+const playerSwitch = document.querySelector('.playerSwitch');
+const playerSwitchButton = playerSwitch.querySelector('button');
+
 const startMenu = document.querySelector('form.startMenu');
 const gamemodes = startMenu.querySelectorAll('.mode input');
 const difficultyOption = startMenu.querySelector('.difficulty');
@@ -52,6 +55,10 @@ switchDirButton.addEventListener('click', () => {
     } else {
         placementBoard.dataset.vertical = 'true';
     }
+});
+
+playerSwitchButton.addEventListener('click', () => {
+    playerSwitch.classList.add('hidden');
 });
 
 function exitGame() {
@@ -192,7 +199,7 @@ function highlightShip(row, col, length, vertical, highlight) {
                 cell.classList.remove('highlight');
             }
         } catch (error) {
-            /* console.error('Cell is out of bounds.'); */
+            console.error('Cell is out of bounds.');
         }
     }
 }
@@ -215,7 +222,6 @@ function cellStatus(coords) {
 }
 
 /**
- *
  * @param {*} x
  * @param {*} y
  * @param {*} type [display, hit, placement]
@@ -278,4 +284,24 @@ export function toggleHitBoard(disable = false) {
     } else {
         hitBoard.classList.remove('disabled');
     }
+}
+
+/**
+ * Prevents players from seeing their opponent's board and prompts them to switch.
+ * @param {boolean} hide
+ * @param {integer} currentPlayer
+ * @param {integer} otherPlayer
+ */
+export function togglePlayerSwitch(hide, currentPlayer, otherPlayer) {
+    if (hide) {
+        playerSwitch.classList.add('hidden');
+        return;
+    }
+
+    const current = playerSwitch.querySelector('.currentPlayer');
+    const other = playerSwitch.querySelector('.otherPlayer');
+    current.textContent = currentPlayer;
+    other.textContent = otherPlayer;
+    playerSwitch.classList.remove('hidden');
+    console.log('hi');
 }
