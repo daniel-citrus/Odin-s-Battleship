@@ -7,6 +7,7 @@
     <script defer src="bundle.js"></script></head>
     <body>
         <form class="startMenu">
+            <h1>Battleship</h1>
             <fieldset class="mode">
                 <input
                     type="radio"
@@ -44,8 +45,8 @@
             </fieldset>
             <button type="button">Start Game</button>
         </form>
-        <div class="currentPlayer hidden">Player 1</div>
-        <div class="boards">
+        <h2 class="currentPlayer hidden">Player 1</h2>
+        <div class="boards hidden">
             <div class="board" id="current"></div>
             <div class="board" id="opponent"></div>
             <div class="hidden" id="placeScreen" data-length="0">
@@ -68,10 +69,12 @@
             </div>
         </div>
         <div class="playerSwitch hidden">
-            <p>Player <span class="currentPlayer">#</span>, look away!</p>
-            <button type="button">
-                Switch to Player <span class="otherPlayer">#</span>
-            </button>
+            <div class="background">
+                <p>Player <span class="currentPlayer">#</span>, look away!</p>
+                <button type="button">
+                    Switch to Player <span class="otherPlayer">#</span>
+                </button>
+            </div>
         </div>
     </body>
 </html>

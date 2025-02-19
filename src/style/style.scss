@@ -3,16 +3,46 @@ $background-color: rgb(26, 26, 26);
 body {
     background: $background-color;
     color: white;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+button {
+    margin-top: 10px;
+    border: 2px solid white;
+    background: black;
+    color: white;
+    padding: 10px;
+
+    &:hover {
+        border-color: rgb(216, 216, 216);
+        background: rgb(32, 32, 32);
+        cursor: pointer;
+    }
 }
 
 .boards {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     gap: 20px;
+    justify-content: center;
+
+    #placeScreen {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 10px;
+
+        &.hidden {
+            display: none;
+        }
+    }
 }
 .board {
-    height: 200px;
-    width: 200px;
+    height: 35vh;
+    width: 35vh;
 
     display: grid;
     grid-template: repeat(10, 1fr) / repeat(10, 1fr);
@@ -68,11 +98,17 @@ body {
     }
 }
 
+.currentPlayer {
+    font-size: 1.5rem;
+}
+
 .gameover {
     border: 2px solid white;
     width: fit-content;
     padding: 20px 25px;
     font-size: 1.6rem;
+    position: fixed;
+    background: black;
 
     display: flex;
     flex-flow: column nowrap;
@@ -92,4 +128,70 @@ body {
 
 .hidden {
     display: none;
+}
+
+.startMenu {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    &.hidden {
+        display: none;
+    }
+
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 5px;
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    input {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        display: none;
+
+        &:checked + label {
+            border: 1px solid green;
+        }
+    }
+
+    label {
+        padding: 10px;
+        display: block;
+        border: 1px solid transparent;
+
+        &:hover {
+            border: 1px solid grey;
+        }
+    }
+}
+
+.playerSwitch {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    p {
+        font-size: 1.3rem;
+    }
+
+    .background {
+        background: black;
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
 }

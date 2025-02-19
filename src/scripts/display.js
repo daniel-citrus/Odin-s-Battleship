@@ -303,5 +303,4 @@ export function togglePlayerSwitch(hide, currentPlayer, otherPlayer) {
     current.textContent = currentPlayer;
     other.textContent = otherPlayer;
     playerSwitch.classList.remove('hidden');
-    console.log('hi');
 }

@@ -38,16 +38,6 @@ function smartAttack(opponent) {
             // check if cell is hit
             let tempX, tempY;
 
-            // up
-            tempY = y - 1;
-            if (tempY >= 0 && board[x][tempY].hit === null) {
-                return { x, y: tempY };
-            }
-            // down
-            tempY = y + 1;
-            if (tempY < dim && board[x][tempY].hit === null) {
-                return { x, y: tempY };
-            }
             // left
             tempX = x - 1;
             if (tempX >= 0 && board[tempX][y].hit === null) {
@@ -57,6 +47,17 @@ function smartAttack(opponent) {
             tempX = x + 1;
             if (tempX < dim && board[tempX][y].hit === null) {
                 return { x: tempX, y };
+            }
+
+            // up
+            tempY = y - 1;
+            if (tempY >= 0 && board[x][tempY].hit === null) {
+                return { x, y: tempY };
+            }
+            // down
+            tempY = y + 1;
+            if (tempY < dim && board[x][tempY].hit === null) {
+                return { x, y: tempY };
             }
         }
     }

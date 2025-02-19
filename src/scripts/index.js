@@ -1,4 +1,5 @@
 import '../style/style.scss';
+import '../style/reset.scss';
 import * as display from './display';
 import { Computer, Player } from './player';
 
@@ -8,6 +9,9 @@ let player;
 let opponent;
 let players;
 let difficulty = 'random';
+
+/* initializeGame('player'); */
+/* completePlacement(); */
 
 /**
  * Starts the game if both players have placed their ships, otherwise, allow remaining player to place ships.
